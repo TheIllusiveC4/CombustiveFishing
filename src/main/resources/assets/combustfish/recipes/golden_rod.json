@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "golden_rod",
+  "pattern": [
+    "  g",
+    " gs",
+    "g s"
+  ],
+  "key": {
+    "g": {
+      "type": "forge:ore_dict",
+      "ore": "ingotGold"
+    },
+    "s": {
+      "item": "combustfish:magma_string",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "combustfish:golden_rod",
+    "data": 0
+  }
+}

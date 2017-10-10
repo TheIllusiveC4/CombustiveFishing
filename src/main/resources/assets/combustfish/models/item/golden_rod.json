@@ -1,0 +1,14 @@
+{
+  "parent": "item/handheld_rod",
+  "textures": {
+	"layer0": "combustfish:items/golden_rod_uncast"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "cast": 1
+      },
+      "model": "combustfish:item/golden_rod_cast"
+    }
+  ]
+}

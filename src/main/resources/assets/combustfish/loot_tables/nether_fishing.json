@@ -1,0 +1,28 @@
+{
+  "pools": [
+    {
+      "name": "nether_fishing",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "loot_table",
+          "name": "combustfish:nether_fishing/junk",
+          "weight": 10,
+          "quality": -2
+        },
+        {
+          "type": "loot_table",
+          "name": "combustfish:nether_fishing/treasure",
+          "weight": 5,
+          "quality": 2
+        },
+        {
+          "type": "loot_table",
+          "name": "combustfish:nether_fishing/fish",
+          "weight": 85,
+          "quality": -1
+        }
+      ]
+    }
+  ]
+}

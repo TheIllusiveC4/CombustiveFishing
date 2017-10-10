@@ -1,0 +1,21 @@
+{
+  "pools": [
+    {
+      "name": "fish",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "combustfish:combustive_cod",
+          "functions": [
+            {
+              "function": "set_data",
+              "data": 0
+            }
+          ],
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
