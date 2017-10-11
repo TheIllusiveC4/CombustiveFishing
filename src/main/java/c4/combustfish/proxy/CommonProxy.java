@@ -13,6 +13,7 @@ import c4.combustfish.common.items.ItemCombustiveCod;
 import c4.combustfish.common.items.ItemGoldenRod;
 import c4.combustfish.common.EventHandler;
 import c4.combustfish.common.util.init.CombustFishLoot;
+import com.progwml6.natura.shared.NaturaCommons;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
@@ -22,11 +23,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
 
@@ -55,6 +58,11 @@ public class CommonProxy {
 
     public void postInit(FMLPostInitializationEvent e) {
 
+        OreDictionary.registerOre("stringFire", CombustFishItems.magmaString);
+
+        if (Loader.isModLoaded("natura")) {
+            OreDictionary.registerOre("stringFire", NaturaCommons.flameString);
+        }
     }
 
     @SubscribeEvent

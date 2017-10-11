@@ -23,7 +23,7 @@ public class CombustiveFishing {
 
     public static final String MODID = "combustfish";
     public static final String MODNAME = "Combustive Fishing";
-    public static final String MODVER = "1.0.0";
+    public static final String MODVER = "1.0.1";
 
     @SidedProxy(clientSide = "c4.combustfish.proxy.ClientProxy", serverSide = "c4.combustfish.proxy.CommonProxy")
     public static CommonProxy proxy;

@@ -12,8 +12,8 @@
       "ore": "ingotGold"
     },
     "s": {
-      "item": "combustfish:magma_string",
-      "data": 0
+      "type": "forge:ore_dict",
+      "ore": "stringFire"
     }
   },
   "result": {
