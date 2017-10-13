@@ -43,8 +43,9 @@ public class ItemCombustiveCod extends ItemSnowball {
             double posZ = entityItem.posZ;
 
             if (!entityItem.world.isRemote) {
+                int amount = entityItem.getItem().getCount();
                 entityItem.setDead();
-                world.spawnEntity(new EntityItem(entityItem.world, posX, posY, posZ, new ItemStack(CombustFishItems.cooledCod, 1, 0)));
+                world.spawnEntity(new EntityItem(entityItem.world, posX, posY, posZ, new ItemStack(CombustFishItems.cooledCod, amount, 0)));
             }
 
             world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.NEUTRAL, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
