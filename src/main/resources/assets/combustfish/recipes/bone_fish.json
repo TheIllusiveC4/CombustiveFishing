@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "bone_fish",
+  "ingredients": [
+    {
+      "item": "combustfish:bone_fish",
+      "data": 0
+    }
+  ],
+  "result": {
+    "item": "minecraft:dye",
+    "data": 15,
+    "count": 5
+  }
+}

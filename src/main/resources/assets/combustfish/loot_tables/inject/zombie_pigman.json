@@ -1,7 +1,7 @@
 {
     "pools": [
       {
-        "name": "combustive_cod",
+        "name": "nether_fish",
         "conditions": [
           {
             "condition": "killed_by_player"
@@ -17,7 +17,12 @@
           {
             "type": "item",
             "name": "combustfish:combustive_cod",
-            "weight": 1
+            "weight": 70
+          },
+          {
+            "type": "item",
+            "name": "combustfish:searing_swordfish",
+            "weight": 30
           }
         ]
       },

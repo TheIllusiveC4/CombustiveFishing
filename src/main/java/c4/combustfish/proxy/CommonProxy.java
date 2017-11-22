@@ -4,13 +4,10 @@
 
 package c4.combustfish.proxy;
 
-import c4.combustfish.common.items.ItemCooledCod;
-import c4.combustfish.common.items.ItemMagmaString;
+import c4.combustfish.common.items.*;
 import c4.combustfish.common.util.init.CombustFishEntities;
 import c4.combustfish.common.entities.EntityThrownCombustiveCod;
 import c4.combustfish.common.util.init.CombustFishItems;
-import c4.combustfish.common.items.ItemCombustiveCod;
-import c4.combustfish.common.items.ItemGoldenRod;
 import c4.combustfish.common.EventHandler;
 import c4.combustfish.common.util.init.CombustFishLoot;
 import com.progwml6.natura.shared.NaturaCommons;
@@ -39,6 +36,7 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {
         CombustFishEntities.init();
         CombustFishLoot.init();
+        CombustFishItems.init();
     }
 
     public void init(FMLInitializationEvent e) {
@@ -68,9 +66,8 @@ public class CommonProxy {
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> e) {
 
-        e.getRegistry().register(new ItemGoldenRod());
-        e.getRegistry().register(new ItemCombustiveCod());
-        e.getRegistry().register(new ItemCooledCod());
-        e.getRegistry().register(new ItemMagmaString());
+        for (Item item : CombustFishItems.initItems) {
+            e.getRegistry().register(item);
+        }
     }
 }

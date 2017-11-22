@@ -14,7 +14,7 @@
                             "data": 0
                         }
                     ],
-                    "weight": 70
+                    "weight": 65
                 },
                 {
                     "type": "item",
@@ -26,7 +26,13 @@
                             "data": 1
                         }
                     ],
-                    "weight": 30
+                    "weight": 25
+                },
+                {
+                    "type": "item",
+                    "name": "combustfish:bone_fish",
+                    "entryName": "bone_fish",
+                    "weight": 10
                 }
             ]
         }

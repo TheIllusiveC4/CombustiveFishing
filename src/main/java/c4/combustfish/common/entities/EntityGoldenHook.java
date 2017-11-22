@@ -7,8 +7,7 @@ package c4.combustfish.common.entities;
 import c4.combustfish.CombustiveFishing;
 import c4.combustfish.common.util.EntityHelper;
 import c4.combustfish.common.util.init.CombustFishItems;
-import c4.combustfish.common.util.EntityFishHookAccessor;
-import com.mojang.authlib.GameProfile;
+import c4.combustfish.common.util.EntityAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -31,12 +30,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.FMLContainer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
 
 import java.util.List;
@@ -122,7 +115,7 @@ public class EntityGoldenHook extends EntityFishHook {
                 if (!this.world.isRemote)
                 {
                     try {
-                        EntityFishHookAccessor.checkCollision(this);
+                        EntityAccessor.checkCollision(this);
                     } catch (Exception e) {
                         CombustiveFishing.logger.log(Level.ERROR, "Failed to invoke method checkCollision");
                     }

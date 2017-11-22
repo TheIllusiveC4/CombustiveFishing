@@ -7,13 +7,17 @@
         {
           "type": "item",
           "name": "combustfish:combustive_cod",
-          "functions": [
-            {
-              "function": "set_data",
-              "data": 0
-            }
-          ],
-          "weight": 1
+          "weight": 65
+        },
+        {
+          "type": "item",
+          "name": "combustfish:searing_swordfish",
+          "weight": 25
+        },
+        {
+          "type": "item",
+          "name": "combustfish:bone_fish",
+          "weight": 10
         }
       ]
     }
