@@ -28,7 +28,7 @@ public class ItemCombustiveCod extends ItemSnowball {
     public ItemCombustiveCod() {
         super();
         this.setRegistryName("combustive_cod");
-        this.setUnlocalizedName(CombustiveFishing.MODID + ".combustive_cod");
+        this.setTranslationKey(CombustiveFishing.MODID + ".combustive_cod");
     }
 
     @SideOnly(Side.CLIENT)
@@ -91,7 +91,7 @@ public class ItemCombustiveCod extends ItemSnowball {
         if (!worldIn.isRemote)
         {
             EntityThrownCombustiveCod conflagrantCod = new EntityThrownCombustiveCod(worldIn, playerIn);
-            conflagrantCod.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+            conflagrantCod.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
             worldIn.spawnEntity(conflagrantCod);
         }
 

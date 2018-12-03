@@ -28,7 +28,7 @@ public class ItemGoldenRod extends ItemFishingRod {
         super();
         this.setMaxDamage(128);
         this.setRegistryName("golden_rod");
-        this.setUnlocalizedName(CombustiveFishing.MODID + ".golden_rod");
+        this.setTranslationKey(CombustiveFishing.MODID + ".golden_rod");
     }
 
     @SideOnly(Side.CLIENT)

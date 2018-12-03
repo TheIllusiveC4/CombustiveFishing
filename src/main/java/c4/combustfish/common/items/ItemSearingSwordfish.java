@@ -28,7 +28,7 @@ public class ItemSearingSwordfish extends ItemSword {
     public ItemSearingSwordfish() {
         super(CombustFishItems.fishMaterial);
         this.setRegistryName("searing_swordfish");
-        this.setUnlocalizedName(CombustiveFishing.MODID + ".searing_swordfish");
+        this.setTranslationKey(CombustiveFishing.MODID + ".searing_swordfish");
         this.setNoRepair();
     }
 

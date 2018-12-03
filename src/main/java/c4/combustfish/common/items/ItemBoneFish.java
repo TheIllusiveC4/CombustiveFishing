@@ -28,7 +28,7 @@ public class ItemBoneFish extends Item {
 
     public ItemBoneFish() {
         this.setRegistryName("bone_fish");
-        this.setUnlocalizedName(CombustiveFishing.MODID + ".bone_fish");
+        this.setTranslationKey(CombustiveFishing.MODID + ".bone_fish");
         this.setCreativeTab(CreativeTabs.MISC);
     }
 
@@ -47,7 +47,7 @@ public class ItemBoneFish extends Item {
                     CombustiveFishing.logger.log(Level.ERROR, "Failed to access field aiTempt");
                 }
 
-                if ((aiTempt == null || aiTempt.isRunning()) && player.getDistanceSqToEntity(ocelot) < 9.0D) {
+                if ((aiTempt == null || aiTempt.isRunning()) && player.getDistanceSq(ocelot) < 9.0D) {
 
                     if (!player.capabilities.isCreativeMode) {
                         stack.shrink(1);
@@ -89,7 +89,7 @@ public class ItemBoneFish extends Item {
                     if (!wolf.world.isRemote) {
                         if (rand.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(wolf, player)) {
                             wolf.setTamedBy(player);
-                            wolf.getNavigator().clearPathEntity();
+                            wolf.getNavigator().clearPath();
                             wolf.setAttackTarget(null);
                             wolf.setHealth(20.0F);
                             try {

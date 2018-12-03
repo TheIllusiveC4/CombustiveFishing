@@ -15,7 +15,7 @@ public class ItemTemperedSwordfish extends ItemFood {
         super(12, 1.6F, false);
         this.setMaxDamage(131);
         this.setRegistryName("tempered_swordfish");
-        this.setUnlocalizedName(CombustiveFishing.MODID + ".tempered_swordfish");
+        this.setTranslationKey(CombustiveFishing.MODID + ".tempered_swordfish");
     }
 
     @Override

@@ -13,7 +13,7 @@ public class ItemMagmaString extends Item {
     public ItemMagmaString() {
         super();
         this.setRegistryName("magma_string");
-        this.setUnlocalizedName(CombustiveFishing.MODID + ".magma_string");
+        this.setTranslationKey(CombustiveFishing.MODID + ".magma_string");
         this.setCreativeTab(CreativeTabs.MISC);
     }
 
