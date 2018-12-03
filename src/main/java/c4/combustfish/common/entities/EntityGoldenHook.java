@@ -49,11 +49,12 @@ public class EntityGoldenHook extends EntityFishHook {
 
     public EntityGoldenHook(World worldIn) {
         super(worldIn, worldIn.isRemote ? EntityHelper.initClient() : null);
+        this.isImmuneToFire = true;
     }
 
-    public EntityGoldenHook(World worldIn, EntityPlayer fishingPlayer)
-    {
+    public EntityGoldenHook(World worldIn, EntityPlayer fishingPlayer) {
         super(worldIn, fishingPlayer);
+        this.isImmuneToFire = true;
     }
 
     @Override
@@ -121,7 +122,7 @@ public class EntityGoldenHook extends EntityFishHook {
                     }
                 }
 
-                if (!this.inGround && !this.onGround && !this.isCollidedHorizontally)
+                if (!this.inGround && !this.onGround && !this.collidedHorizontally)
                 {
                     ++this.ticksInAir;
                 }
@@ -372,7 +373,8 @@ public class EntityGoldenHook extends EntityFishHook {
             else if (this.ticksCatchable > 0)
             {
                 LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer)this.world);
-                lootcontext$builder.withLuck((float)this.luck + this.getAngler().getLuck());
+                lootcontext$builder.withLuck((float)this.luck + this.getAngler().getLuck()).withPlayer(this.getAngler())
+                        .withLootedEntity(this);
                 List<ItemStack> result;
                 double d = (double)((float)MathHelper.floor(this.getEntityBoundingBox().minY) + 1.0F);
                 Block block = this.world.getBlockState(new BlockPos(this.posX, d - 1.0D, this.posZ)).getBlock();
@@ -447,7 +449,7 @@ public class EntityGoldenHook extends EntityFishHook {
         boolean flag = itemstack.getItem() instanceof net.minecraft.item.ItemFishingRod;
         boolean flag1 = itemstack1.getItem() instanceof net.minecraft.item.ItemFishingRod;
 
-        if (!this.getAngler().isDead && this.getAngler().isEntityAlive() && (flag || flag1) && this.getDistanceSqToEntity(this.getAngler()) <= 1024.0D)
+        if (!this.getAngler().isDead && this.getAngler().isEntityAlive() && (flag || flag1) && this.getDistanceSq(this.getAngler()) <= 1024.0D)
         {
             return false;
         }
