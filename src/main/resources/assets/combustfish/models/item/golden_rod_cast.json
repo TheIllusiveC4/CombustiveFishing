@@ -1,6 +1,0 @@
-{
-  "parent": "item/fishing_rod",
-  "textures": {
-    "layer0": "combustfish:items/golden_rod_cast"
-  }
-}

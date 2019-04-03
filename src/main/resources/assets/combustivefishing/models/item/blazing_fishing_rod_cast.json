@@ -1,0 +1,6 @@
+{
+  "parent": "combustivefishing:item/blazing_fishing_rod",
+  "textures": {
+    "layer0": "combustivefishing:item/blazing_fishing_rod_cast"
+  }
+}

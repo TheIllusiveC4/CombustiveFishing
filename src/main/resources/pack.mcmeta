@@ -1,6 +1,6 @@
 {
-  "pack": {
-    "pack_format": 3,
-    "description": "Resources used for Combustive Fishing"
-  }
+    "pack": {
+        "description": "Combustive Fishing resources",
+        "pack_format": 4
+    }
 }
