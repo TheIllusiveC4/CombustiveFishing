@@ -9,4 +9,7 @@ public class CombustiveFishingItems {
 
     @ObjectHolder("combustive_cod_bucket")
     public static final Item COMBUSTIVE_COD_BUCKET = null;
+
+    @ObjectHolder("combustive_cod")
+    public static final Item COMBUSTIVE_COD = null;
 }

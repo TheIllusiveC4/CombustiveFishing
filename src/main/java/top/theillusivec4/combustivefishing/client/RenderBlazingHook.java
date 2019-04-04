@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
@@ -27,9 +26,7 @@ public class RenderBlazingHook extends Render<EntityBlazingHook> {
         super(renderManagerIn);
     }
 
-    /**
-     * Renders the desired {@code T} type Entity.
-     */
+    @Override
     public void doRender(@Nonnull EntityBlazingHook entity, double x, double y, double z, float entityYaw, float partialTicks) {
         EntityPlayer entityplayer = entity.getAngler();
 
