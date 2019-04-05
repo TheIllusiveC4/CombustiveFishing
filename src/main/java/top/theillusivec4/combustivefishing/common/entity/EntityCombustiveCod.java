@@ -8,14 +8,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
+import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingItems;
+import top.theillusivec4.combustivefishing.common.init.CombustiveFishingLoot;
 
 import javax.annotation.Nullable;
 
 public class EntityCombustiveCod extends AbstractLavaGroupFish {
 
     public EntityCombustiveCod(World world) {
-        super(EntityType.COD, world);
+        super(CombustiveFishingEntities.COMBUSTIVE_COD, world);
         this.setSize(0.5F, 0.3F);
     }
 
@@ -25,7 +27,7 @@ public class EntityCombustiveCod extends AbstractLavaGroupFish {
 
     @Nullable
     protected ResourceLocation getLootTable() {
-        return LootTableList.ENTITIES_COD;
+        return CombustiveFishingLoot.COMBUSTIVE_COD;
     }
 
     protected SoundEvent getAmbientSound() {

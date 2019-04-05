@@ -49,10 +49,10 @@ public class LavaSwimNodeProcessor extends SwimNodeProcessor {
         BlockPos blockpos = new BlockPos(x, y, z);
         IFluidState ifluidstate = blockaccessIn.getFluidState(blockpos);
         IBlockState iblockstate = blockaccessIn.getBlockState(blockpos);
-        if (ifluidstate.isEmpty() && iblockstate.allowsMovement(blockaccessIn, blockpos.down(), PathType.WATER) && iblockstate.isAir(blockaccessIn, blockpos)) {
+        if (ifluidstate.isEmpty() && iblockstate.isAir(blockaccessIn, blockpos)) {
             return PathNodeType.BREACH;
         } else {
-            return ifluidstate.isTagged(FluidTags.LAVA) && iblockstate.allowsMovement(blockaccessIn, blockpos, PathType.WATER) ? PathNodeType.LAVA : PathNodeType.BLOCKED;
+            return ifluidstate.isTagged(FluidTags.LAVA) ? PathNodeType.LAVA : PathNodeType.BLOCKED;
         }
     }
 
@@ -74,12 +74,6 @@ public class LavaSwimNodeProcessor extends SwimNodeProcessor {
                 }
             }
         }
-
-        IBlockState iblockstate1 = this.blockaccess.getBlockState(blockpos$mutableblockpos);
-        if (iblockstate1.allowsMovement(this.blockaccess, blockpos$mutableblockpos, PathType.WATER)) {
-            return PathNodeType.LAVA;
-        } else {
-            return PathNodeType.BLOCKED;
-        }
+        return PathNodeType.LAVA;
     }
 }
