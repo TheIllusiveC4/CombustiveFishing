@@ -3,7 +3,9 @@ package top.theillusivec4.combustivefishing.common.entity;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -14,6 +16,7 @@ import net.minecraft.fluid.IFluidState;
 import net.minecraft.init.Particles;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -28,6 +31,9 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingLoot;
 import top.theillusivec4.combustivefishing.common.item.ItemBlazingFishingRod;
 
@@ -35,7 +41,7 @@ import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
-public class EntityBlazingHook extends EntityFishHook {
+public class EntityBlazingHook extends EntityFishHook implements IEntityAdditionalSpawnData {
 
     private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.createKey(EntityBlazingHook.class, DataSerializers.VARINT);
     private EntityBlazingHook.State currentState = EntityBlazingHook.State.FLYING;
@@ -50,15 +56,31 @@ public class EntityBlazingHook extends EntityFishHook {
     private int luck;
     private EntityPlayer angler;
 
-    @OnlyIn(Dist.CLIENT)
-    public EntityBlazingHook(World worldIn, EntityPlayer player, double x, double y, double z) {
-        super(worldIn, player, x, y, z);
-        this.angler = player;
+    public EntityBlazingHook(World worldIn) {
+        super(worldIn, Minecraft.getInstance().player, 0, 0, 0);
+        this.isImmuneToFire = true;
     }
 
     public EntityBlazingHook(World worldIn, EntityPlayer fishingPlayer) {
         super(worldIn, fishingPlayer);
         this.angler = fishingPlayer;
+        this.isImmuneToFire = true;
+    }
+
+    @Override
+    public void writeSpawnData(PacketBuffer buffer) {
+        buffer.writeInt(this.angler.getEntityId());
+    }
+
+    @Override
+    public void readSpawnData(PacketBuffer additionalData) {
+        this.angler = (EntityPlayer)Minecraft.getInstance().world.getEntityByID(additionalData.readInt());
+    }
+
+    @Nonnull
+    @Override
+    public EntityType<?> getType() {
+        return CombustiveFishingEntities.BLAZING_BOBBER;
     }
 
     @Override
@@ -90,17 +112,18 @@ public class EntityBlazingHook extends EntityFishHook {
 
             if (this.inGround) {
                 ++this.ticksInGround;
+
                 if (this.ticksInGround >= 1200) {
                     this.remove();
                     return;
                 }
             }
-
             float f = 0.0F;
             BlockPos blockpos = new BlockPos(this);
             IFluidState ifluidstate = this.world.getFluidState(blockpos);
+            boolean isLava = ifluidstate.isTagged(FluidTags.LAVA);
 
-            if (ifluidstate.isTagged(FluidTags.LAVA) || ifluidstate.isTagged(FluidTags.WATER)) {
+            if (isLava || ifluidstate.isTagged(FluidTags.WATER)) {
                 f = ifluidstate.getHeight();
             }
 
@@ -139,6 +162,7 @@ public class EntityBlazingHook extends EntityFishHook {
                 if (this.currentState == EntityBlazingHook.State.HOOKED_IN_ENTITY) {
 
                     if (this.caughtEntity != null) {
+
                         if (!this.caughtEntity.isAlive()) {
                             this.caughtEntity = null;
                             this.currentState = EntityBlazingHook.State.FLYING;
@@ -432,12 +456,17 @@ public class EntityBlazingHook extends EntityFishHook {
                 CriteriaTriggers.FISHING_ROD_HOOKED.trigger((EntityPlayerMP)this.angler, itemStack, this, list);
 
                 for(ItemStack itemstack : list) {
-                    EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY, this.posZ, itemstack);
+                    EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY + 1.0D, this.posZ, itemstack);
                     double d0 = this.angler.posX - this.posX;
                     double d1 = this.angler.posY - this.posY;
                     double d2 = this.angler.posZ - this.posZ;
                     double d3 = (double)MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
                     double d4 = 0.1D;
+
+                    if (isInLava()) {
+                        d4 *= 2;
+                        ObfuscationReflectionHelper.setPrivateValue(Entity.class, entityitem, true, "field_70178_ae");
+                    }
                     entityitem.motionX = d0 * d4;
                     entityitem.motionY = d1 * d4 + (double)MathHelper.sqrt(d3) * 0.08D;
                     entityitem.motionZ = d2 * d4;

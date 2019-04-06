@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.entity.RenderFish;
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
+import top.theillusivec4.combustivefishing.client.RenderBlazingHook;
 import top.theillusivec4.combustivefishing.client.RenderCombustiveCod;
 import top.theillusivec4.combustivefishing.client.RenderThrownCombustiveCod;
 import top.theillusivec4.combustivefishing.common.entity.EntityBlazingHook;
@@ -27,7 +28,7 @@ public class CombustiveFishingEntities {
                 .build("thrown_combustive_cod");
         THROWN_COMBUSTIVE_COD.setRegistryName(CombustiveFishing.MODID, "thrown_combustive_cod");
 
-        BLAZING_BOBBER = EntityType.Builder.createNothing(EntityBlazingHook.class)
+        BLAZING_BOBBER = EntityType.Builder.create(EntityBlazingHook.class, EntityBlazingHook::new)
                 .disableSerialization()
                 .disableSummoning()
                 .tracker(64, 5, true)
@@ -36,7 +37,7 @@ public class CombustiveFishingEntities {
     }
 
     public static void registerEntityRenders() {
-        RenderingRegistry.registerEntityRenderingHandler(EntityBlazingHook.class, RenderFish::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityBlazingHook.class, RenderBlazingHook::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityThrownCombustiveCod.class, RenderThrownCombustiveCod::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityCombustiveCod.class, RenderCombustiveCod::new);
     }

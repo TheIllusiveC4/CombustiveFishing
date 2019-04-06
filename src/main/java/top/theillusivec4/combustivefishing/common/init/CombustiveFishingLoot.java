@@ -6,8 +6,8 @@ import top.theillusivec4.combustivefishing.CombustiveFishing;
 
 public class CombustiveFishingLoot {
 
-    public static final ResourceLocation NETHER_FISHING = create("nether_fishing");
-    public static final ResourceLocation LAVA_FISHING = create("lava_fishing");
+    public static final ResourceLocation NETHER_FISHING = create("gameplay/nether_fishing");
+    public static final ResourceLocation LAVA_FISHING = create("gameplay/lava_fishing");
     public static final ResourceLocation COMBUSTIVE_COD = create("entity/combustive_cod");
 
     private static ResourceLocation create(String path) {
@@ -16,5 +16,6 @@ public class CombustiveFishingLoot {
 
     public static void registerLootTables() {
         LootTableList.register(COMBUSTIVE_COD);
+        LootTableList.register(LAVA_FISHING);
     }
 }
