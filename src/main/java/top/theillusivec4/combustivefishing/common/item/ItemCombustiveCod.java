@@ -16,10 +16,10 @@ import top.theillusivec4.combustivefishing.common.entity.EntityThrownCombustiveC
 
 import javax.annotation.Nonnull;
 
-public class ItemCombustiveCod extends Item {
+public class ItemCombustiveCod extends ItemHotFish {
 
     public ItemCombustiveCod() {
-        super(new Item.Properties().maxStackSize(16).group(ItemGroup.MISC));
+        super(FishType.COMBUSTIVE_COD, new Item.Properties().maxStackSize(16).group(ItemGroup.MISC));
         this.setRegistryName(CombustiveFishing.MODID, "combustive_cod");
     }
 

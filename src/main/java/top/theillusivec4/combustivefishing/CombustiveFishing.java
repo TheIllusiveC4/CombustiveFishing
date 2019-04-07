@@ -26,6 +26,7 @@ import top.theillusivec4.combustivefishing.common.init.CombustiveFishingLoot;
 import top.theillusivec4.combustivefishing.common.item.ItemBlazingFishingRod;
 import top.theillusivec4.combustivefishing.common.item.ItemBucketLavaFish;
 import top.theillusivec4.combustivefishing.common.item.ItemCombustiveCod;
+import top.theillusivec4.combustivefishing.common.item.ItemCooledCod;
 
 @Mod(CombustiveFishing.MODID)
 public class CombustiveFishing {
@@ -54,7 +55,8 @@ public class CombustiveFishing {
                     new ItemBucketLavaFish(CombustiveFishingEntities.COMBUSTIVE_COD, Fluids.LAVA),
                     new ItemBlazingFishingRod(),
                     new ItemCombustiveCod(),
-                    new ItemSpawnEgg(CombustiveFishingEntities.COMBUSTIVE_COD, 16699430, 8804608, new Item.Properties().group(ItemGroup.MISC)).setRegistryName(MODID, "combustive_cod_spawn_egg"));
+                    new ItemSpawnEgg(CombustiveFishingEntities.COMBUSTIVE_COD, 16699430, 8804608, new Item.Properties().group(ItemGroup.MISC)).setRegistryName(MODID, "combustive_cod_spawn_egg"),
+                    new ItemCooledCod());
         }
 
         @SubscribeEvent
