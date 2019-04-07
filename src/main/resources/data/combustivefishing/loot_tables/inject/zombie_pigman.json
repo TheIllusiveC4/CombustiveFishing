@@ -1,0 +1,76 @@
+{
+  "pools": [
+    {
+      "name": "nether_fish",
+      "conditions": [
+        {
+          "condition": "killed_by_player"
+        },
+        {
+          "condition": "random_chance_with_looting",
+          "chance": 0.025,
+          "looting_multiplier": 0.01
+        }
+      ],
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "combustivefishing:combustive_cod",
+          "weight": 70
+        }
+      ]
+    },
+    {
+      "name": "blazing_fishing_rod",
+      "conditions": [
+        {
+          "condition": "killed_by_player"
+        },
+        {
+          "condition": "random_chance_with_looting",
+          "chance": 0.025,
+          "looting_multiplier": 0.01
+        }
+      ],
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "combustivefishing:blazing_fishing_rod",
+          "entryName": "enchanted",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "set_damage",
+              "damage": {
+                "min": 0,
+                "max": 0.25
+              }
+            },
+            {
+              "function": "enchant_with_levels",
+              "levels": 30,
+              "treasure": true
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "combustivefishing:blazing_fishing_rod",
+          "entryName": "normal",
+          "weight": 9,
+          "functions": [
+            {
+              "function": "set_damage",
+              "damage": {
+                "min": 0,
+                "max": 0.9
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

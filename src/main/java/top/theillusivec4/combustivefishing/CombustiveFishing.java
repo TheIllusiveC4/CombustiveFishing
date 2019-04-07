@@ -8,8 +8,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemSpawnEgg;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -31,8 +34,9 @@ public class CombustiveFishing {
     public static final String MODID = "combustivefishing";
 
     public CombustiveFishing() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        eventBus.addListener(this::setup);
+        eventBus.addListener(this::clientSetup);
     }
 
     private void setup(final FMLCommonSetupEvent evt) {
@@ -63,6 +67,21 @@ public class CombustiveFishing {
                     CombustiveFishingEntities.COMBUSTIVE_COD,
                     CombustiveFishingEntities.BLAZING_BOBBER,
                     CombustiveFishingEntities.THROWN_COMBUSTIVE_COD);
+        }
+    }
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class Events {
+
+        @SubscribeEvent
+        public static void onPigmanLootTableLoad(final LootTableLoadEvent evt) {
+
+            if (evt.getName().equals(LootTableList.ENTITIES_ZOMBIE_PIGMAN)) {
+                LootTable lootTable = evt.getTable();
+                LootTable inject = evt.getLootTableManager().getLootTableFromLocation(CombustiveFishingLoot.PIGMAN_INJECT);
+                lootTable.addPool(inject.getPool("blazing_fishing_rod"));
+                lootTable.addPool(inject.getPool("nether_fish"));
+            }
         }
     }
 }
