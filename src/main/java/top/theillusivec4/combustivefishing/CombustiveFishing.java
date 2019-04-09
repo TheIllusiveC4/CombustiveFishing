@@ -58,7 +58,9 @@ public class CombustiveFishing {
                     new ItemCombustiveCod(),
                     new ItemSpawnEgg(CombustiveFishingEntities.COMBUSTIVE_COD, 16699430, 8804608, new Item.Properties().group(ItemGroup.MISC)).setRegistryName(MODID, "combustive_cod_spawn_egg"),
                     new ItemCooledCod(),
-                    new ItemBoneFish());
+                    new ItemBoneFish(),
+                    new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(MODID, "swordfish_bill"),
+                    new ItemSearingSword());
         }
 
         @SubscribeEvent

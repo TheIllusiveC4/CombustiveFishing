@@ -18,4 +18,7 @@ public class CombustiveFishingItems {
 
     @ObjectHolder("bone_fish")
     public static final Item BONE_FISH = null;
+
+    @ObjectHolder("swordfish_bill")
+    public static final Item SWORDFISH_BILL = null;
 }
