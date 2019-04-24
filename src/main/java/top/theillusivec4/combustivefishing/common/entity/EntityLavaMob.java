@@ -39,6 +39,7 @@ public abstract class EntityLavaMob extends EntityWaterMob {
         } else {
             this.setAir(300);
         }
-
     }
+
+
 }

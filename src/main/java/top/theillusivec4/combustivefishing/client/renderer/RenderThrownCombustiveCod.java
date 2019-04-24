@@ -1,4 +1,4 @@
-package top.theillusivec4.combustivefishing.client;
+package top.theillusivec4.combustivefishing.client.renderer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

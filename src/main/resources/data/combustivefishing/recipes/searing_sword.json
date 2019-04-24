@@ -1,0 +1,18 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "X",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "combustivefishing:swordfish_bill"
+    }
+  },
+  "result": {
+    "item": "combustivefishing:searing_sword"
+  }
+}
