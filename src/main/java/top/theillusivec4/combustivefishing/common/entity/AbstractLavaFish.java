@@ -150,7 +150,7 @@ public abstract class AbstractLavaFish extends EntityLavaMob implements IAnimal 
     @Override
     protected boolean processInteract(EntityPlayer player, EnumHand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
-        if (itemstack.getItem() == Items.WATER_BUCKET && this.isAlive()) {
+        if (itemstack.getItem() == Items.LAVA_BUCKET && this.isAlive()) {
             this.playSound(SoundEvents.ITEM_BUCKET_FILL_FISH, 1.0F, 1.0F);
             itemstack.shrink(1);
             ItemStack itemstack1 = this.getFishBucket();

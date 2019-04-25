@@ -21,27 +21,33 @@ public class EntityCombustiveCod extends AbstractLavaGroupFish {
         this.setSize(0.5F, 0.3F);
     }
 
+    @Override
     protected ItemStack getFishBucket() {
         return new ItemStack(CombustiveFishingItems.COMBUSTIVE_COD_BUCKET);
     }
 
     @Nullable
+    @Override
     protected ResourceLocation getLootTable() {
         return CombustiveFishingLoot.COMBUSTIVE_COD;
     }
 
+    @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_COD_AMBIENT;
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_COD_DEATH;
     }
 
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return SoundEvents.ENTITY_COD_HURT;
     }
 
+    @Override
     protected SoundEvent getFlopSound() {
         return SoundEvents.ENTITY_COD_FLOP;
     }

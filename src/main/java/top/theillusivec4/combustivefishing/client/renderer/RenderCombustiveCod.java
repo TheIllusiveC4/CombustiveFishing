@@ -31,10 +31,10 @@ public class RenderCombustiveCod extends RenderLiving<EntityCombustiveCod> {
         super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
         float f = 4.3F * MathHelper.sin(0.6F * ageInTicks);
         GlStateManager.rotatef(f, 0.0F, 1.0F, 0.0F);
+
         if (!entityLiving.isInLava()) {
             GlStateManager.translatef(0.1F, 0.1F, -0.1F);
             GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
         }
-
     }
 }

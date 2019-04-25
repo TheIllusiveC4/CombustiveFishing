@@ -42,7 +42,7 @@ public class ItemSearingSword extends ItemSword {
             public Ingredient getRepairMaterial() {
                 return Ingredient.fromItems(CombustiveFishingItems.SWORDFISH_BILL);
             }
-        }, 6, 1.4F, new Item.Properties().group(ItemGroup.COMBAT));
+        }, 0, -2.0F, new Item.Properties().group(ItemGroup.COMBAT));
         this.setRegistryName(CombustiveFishing.MODID, "searing_sword");
     }
 
