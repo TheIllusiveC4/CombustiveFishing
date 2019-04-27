@@ -11,6 +11,7 @@ public class CombustiveFishingLoot {
     public static final ResourceLocation LAVA_FISHING = create("gameplay/lava_fishing");
     public static final ResourceLocation COMBUSTIVE_COD = create("entity/combustive_cod");
     public static final ResourceLocation PIGMAN_INJECT = create("inject/zombie_pigman");
+    public static final ResourceLocation SEARING_SWORDFISH = create("entity/searing_swordfish");
 
     private static ResourceLocation create(String path) {
         return new ResourceLocation(CombustiveFishing.MODID, path);
@@ -20,5 +21,6 @@ public class CombustiveFishingLoot {
         LootTableList.register(COMBUSTIVE_COD);
         LootTableList.register(LAVA_FISHING);
         LootTableList.register(PIGMAN_INJECT);
+        LootTableList.register(SEARING_SWORDFISH);
     }
 }

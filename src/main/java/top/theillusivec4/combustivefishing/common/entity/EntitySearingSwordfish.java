@@ -33,7 +33,7 @@ public class EntitySearingSwordfish extends AbstractLavaFish {
     @Nullable
     @Override
     protected ResourceLocation getLootTable() {
-        return CombustiveFishingLoot.COMBUSTIVE_COD;
+        return CombustiveFishingLoot.SEARING_SWORDFISH;
     }
 
     @Override

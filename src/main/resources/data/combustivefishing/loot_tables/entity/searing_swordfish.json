@@ -1,0 +1,42 @@
+{
+  "pools": [
+    {
+      "name": "fish",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "combustivefishing:combustive_cod",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 0,
+                "max": 1
+              }
+            },
+            {
+              "function": "looting_enchant",
+              "count": {
+                "min": 0,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "bill",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "combustivefishing:swordfish_bill",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
