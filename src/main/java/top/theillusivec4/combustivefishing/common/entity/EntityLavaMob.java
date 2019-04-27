@@ -67,7 +67,7 @@ public abstract class EntityLavaMob extends EntityWaterMob {
             if (this.isInWater()) {
                 this.setAir(0);
                 this.attackEntityFrom(DamageSource.DROWN, Integer.MAX_VALUE);
-            } else if (this.getAir() == -20) {
+            } else if (this.getAir() == -20 || this.isWet()) {
                 this.setAir(0);
                 this.attackEntityFrom(DamageSource.DROWN, 2.0F);
             }

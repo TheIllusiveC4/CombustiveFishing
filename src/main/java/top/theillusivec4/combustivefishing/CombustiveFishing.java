@@ -1,12 +1,19 @@
 package top.theillusivec4.combustivefishing;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemSpawnEgg;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,6 +25,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingLoot;
 import top.theillusivec4.combustivefishing.common.item.*;
+
+import java.util.List;
 
 @Mod(CombustiveFishing.MODID)
 public class CombustiveFishing {
@@ -35,6 +44,7 @@ public class CombustiveFishing {
     }
 
     private void clientSetup(final FMLClientSetupEvent evt) {
+
         CombustiveFishingEntities.registerEntityRenders();
     }
 
@@ -63,6 +73,15 @@ public class CombustiveFishing {
                     CombustiveFishingEntities.BLAZING_BOBBER,
                     CombustiveFishingEntities.THROWN_COMBUSTIVE_COD,
                     CombustiveFishingEntities.SEARING_SWORDFISH);
+            EntitySpawnPlacementRegistry.SpawnPlacementType type = EntitySpawnPlacementRegistry.SpawnPlacementType.create("in_lava", (i, b, e) -> i.getBlockState(b).getFluidState().isTagged(FluidTags.LAVA));
+            EntitySpawnPlacementRegistry.register(CombustiveFishingEntities.COMBUSTIVE_COD, type, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, null);
+            EntitySpawnPlacementRegistry.register(CombustiveFishingEntities.SEARING_SWORDFISH, type, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, null);
+
+            for (Biome biome : BiomeDictionary.getBiomes(BiomeDictionary.Type.NETHER)) {
+                List<Biome.SpawnListEntry> list = biome.getSpawns(EnumCreatureType.WATER_CREATURE);
+                list.add(new Biome.SpawnListEntry(CombustiveFishingEntities.COMBUSTIVE_COD, 15, 3, 6));
+                list.add(new Biome.SpawnListEntry(CombustiveFishingEntities.SEARING_SWORDFISH, 1, 1, 2));
+            }
         }
     }
 
