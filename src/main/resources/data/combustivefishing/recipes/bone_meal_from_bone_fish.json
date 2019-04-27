@@ -1,0 +1,12 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "combustivefishing:bone_fish"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bone_meal",
+    "count": 5
+  }
+}

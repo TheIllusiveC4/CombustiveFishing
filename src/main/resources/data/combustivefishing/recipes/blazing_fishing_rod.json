@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "  g",
+    " gs",
+    "gms"
+  ],
+  "key": {
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "s": {
+      "item": "minecraft:string"
+    },
+    "m": {
+      "item": "minecraft:magma_cream"
+    }
+  },
+  "result": {
+    "item": "combustivefishing:blazing_fishing_rod"
+  }
+}
