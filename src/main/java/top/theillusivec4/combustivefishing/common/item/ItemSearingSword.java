@@ -24,7 +24,7 @@ public class ItemSearingSword extends ItemSword {
 
             @Override
             public float getAttackDamage() {
-                return 4.0F;
+                return 8.0F;
             }
 
             @Override
@@ -42,7 +42,7 @@ public class ItemSearingSword extends ItemSword {
             public Ingredient getRepairMaterial() {
                 return Ingredient.fromItems(CombustiveFishingItems.SWORDFISH_BILL);
             }
-        }, 0, -2.0F, new Item.Properties().group(ItemGroup.COMBAT));
+        }, 0, -1.4F, new Item.Properties().group(ItemGroup.COMBAT));
         this.setRegistryName(CombustiveFishing.MODID, "searing_sword");
     }
 
