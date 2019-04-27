@@ -1,0 +1,30 @@
+{
+  "pools": [
+    {
+      "name": "treasure",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "minecraft:blaze_rod",
+          "weight": 40
+        },
+        {
+          "type": "item",
+          "name": "minecraft:magma_cream",
+          "weight": 40
+        },
+        {
+          "type": "item",
+          "name": "minecraft:ghast_tear",
+          "weight": 8
+        },
+        {
+          "type": "item",
+          "name": "minecraft:wither_skeleton_skull",
+          "weight": 2
+        }
+      ]
+    }
+  ]
+}

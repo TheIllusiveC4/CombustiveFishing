@@ -6,12 +6,12 @@
       "entries": [
         {
           "type": "item",
-          "name": "minecraft:cooked_cod",
+          "name": "combustivefishing:combustive_cod",
           "weight": 65
         },
         {
           "type": "item",
-          "name": "minecraft:cooked_salmon",
+          "name": "combustivefishing:swordfish_bill",
           "weight": 25
         },
         {

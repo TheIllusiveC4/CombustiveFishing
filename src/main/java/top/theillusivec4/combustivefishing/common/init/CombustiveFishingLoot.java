@@ -20,6 +20,7 @@ public class CombustiveFishingLoot {
     public static void registerLootTables() {
         LootTableList.register(COMBUSTIVE_COD);
         LootTableList.register(LAVA_FISHING);
+        LootTableList.register(NETHER_FISHING);
         LootTableList.register(PIGMAN_INJECT);
         LootTableList.register(SEARING_SWORDFISH);
     }
