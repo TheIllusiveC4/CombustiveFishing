@@ -1,13 +1,13 @@
 {
   "type": "crafting_shaped",
   "pattern": [
-    "  g",
-    " gs",
-    "gms"
+    "  b",
+    " bs",
+    "bms"
   ],
   "key": {
-    "g": {
-      "tag": "forge:ingots/gold"
+    "b": {
+      "item": "minecraft:blaze_rod"
     },
     "s": {
       "item": "minecraft:string"
