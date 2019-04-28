@@ -1,13 +1,11 @@
 package top.theillusivec4.combustivefishing.common.entity;
 
-import net.minecraft.entity.EntityType;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootTableList;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingItems;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingLoot;

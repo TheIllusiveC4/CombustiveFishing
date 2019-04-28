@@ -1,6 +1,5 @@
 package top.theillusivec4.combustivefishing;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EnumCreatureType;

@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.model.ModelCod;
-import net.minecraft.entity.passive.EntityCod;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
