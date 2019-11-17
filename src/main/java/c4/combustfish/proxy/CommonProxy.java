@@ -58,7 +58,7 @@ public class CommonProxy {
 
         OreDictionary.registerOre("stringFire", CombustFishItems.magmaString);
 
-        if (Loader.isModLoaded("natura")) {
+        if (Loader.isModLoaded("natura") && NaturaCommons.flameString != null) {
             OreDictionary.registerOre("stringFire", NaturaCommons.flameString);
         }
     }
