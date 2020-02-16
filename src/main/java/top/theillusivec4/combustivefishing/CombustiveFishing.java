@@ -62,45 +62,7 @@ public class CombustiveFishing {
     }
 
     private void clientSetup(final FMLClientSetupEvent evt) {
-
         CombustiveFishingEntities.registerEntityRenders();
-    }
-
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-
-        @SubscribeEvent
-        public static void onItemsRegistry(final RegistryEvent.Register<Item> evt) {
-            evt.getRegistry().registerAll(
-                    new ItemBucketLavaFish(CombustiveFishingEntities.COMBUSTIVE_COD, Fluids.LAVA),
-                    new ItemBlazingFishingRod(),
-                    new ItemCombustiveCod(),
-                    new ItemSpawnEgg(CombustiveFishingEntities.COMBUSTIVE_COD, 16699430, 8804608, new Item.Properties().group(ItemGroup.MISC)).setRegistryName(MODID, "combustive_cod_spawn_egg"),
-                    new ItemSpawnEgg(CombustiveFishingEntities.SEARING_SWORDFISH, 13045262, 16757683, new Item.Properties().group(ItemGroup.MISC)).setRegistryName(MODID, "searing_swordfish_spawn_egg"),
-                    new ItemCooledCod(),
-                    new ItemBoneFish(),
-                    new ItemSwordfishBill(),
-                    new ItemCooledBill(),
-                    new ItemSearingSword());
-        }
-
-        @SubscribeEvent
-        public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> evt) {
-            evt.getRegistry().registerAll(
-                    CombustiveFishingEntities.COMBUSTIVE_COD,
-                    CombustiveFishingEntities.BLAZING_BOBBER,
-                    CombustiveFishingEntities.THROWN_COMBUSTIVE_COD,
-                    CombustiveFishingEntities.SEARING_SWORDFISH);
-            EntitySpawnPlacementRegistry.SpawnPlacementType type = EntitySpawnPlacementRegistry.SpawnPlacementType.create("in_lava", (i, b, e) -> i.getBlockState(b).getFluidState().isTagged(FluidTags.LAVA));
-            EntitySpawnPlacementRegistry.register(CombustiveFishingEntities.COMBUSTIVE_COD, type, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, null);
-            EntitySpawnPlacementRegistry.register(CombustiveFishingEntities.SEARING_SWORDFISH, type, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, null);
-
-            for (Biome biome : BiomeDictionary.getBiomes(BiomeDictionary.Type.NETHER)) {
-                List<Biome.SpawnListEntry> list = biome.getSpawns(EnumCreatureType.WATER_CREATURE);
-                list.add(new Biome.SpawnListEntry(CombustiveFishingEntities.COMBUSTIVE_COD, 15, 3, 6));
-                list.add(new Biome.SpawnListEntry(CombustiveFishingEntities.SEARING_SWORDFISH, 1, 1, 2));
-            }
-        }
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

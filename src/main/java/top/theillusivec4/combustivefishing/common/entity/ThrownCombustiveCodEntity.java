@@ -31,17 +31,17 @@ import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities
 
 import javax.annotation.Nonnull;
 
-public class EntityThrownCombustiveCod extends EntityThrowable {
+public class ThrownCombustiveCodEntity extends EntityThrowable {
 
-    public EntityThrownCombustiveCod(World worldIn) {
+    public ThrownCombustiveCodEntity(World worldIn) {
         super(CombustiveFishingEntities.THROWN_COMBUSTIVE_COD, worldIn);
     }
 
-    public EntityThrownCombustiveCod(World worldIn, EntityLivingBase throwerIn) {
+    public ThrownCombustiveCodEntity(World worldIn, EntityLivingBase throwerIn) {
         super(CombustiveFishingEntities.THROWN_COMBUSTIVE_COD, throwerIn, worldIn);
     }
 
-    public EntityThrownCombustiveCod(World worldIn, double x, double y, double z) {
+    public ThrownCombustiveCodEntity(World worldIn, double x, double y, double z) {
         super(CombustiveFishingEntities.THROWN_COMBUSTIVE_COD, x, y, z, worldIn);
     }
 

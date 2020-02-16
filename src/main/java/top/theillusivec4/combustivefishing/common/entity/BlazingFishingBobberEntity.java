@@ -52,16 +52,17 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingLoot;
-import top.theillusivec4.combustivefishing.common.item.ItemBlazingFishingRod;
+import top.theillusivec4.combustivefishing.common.item.BlazingFishingRodItem;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
-public class EntityBlazingHook extends EntityFishHook implements IEntityAdditionalSpawnData {
+public class BlazingFishingBobberEntity extends EntityFishHook implements IEntityAdditionalSpawnData {
 
-    private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.createKey(EntityBlazingHook.class, DataSerializers.VARINT);
-    private EntityBlazingHook.State currentState = EntityBlazingHook.State.FLYING;
+    private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.createKey(
+        BlazingFishingBobberEntity.class, DataSerializers.VARINT);
+    private BlazingFishingBobberEntity.State currentState = BlazingFishingBobberEntity.State.FLYING;
     private boolean inGround;
     private int ticksInGround;
     private int ticksInAir;
@@ -73,12 +74,12 @@ public class EntityBlazingHook extends EntityFishHook implements IEntityAddition
     private int luck;
     private EntityPlayer angler;
 
-    public EntityBlazingHook(World worldIn) {
+    public BlazingFishingBobberEntity(World worldIn) {
         super(worldIn, Minecraft.getInstance().player, 0, 0, 0);
         this.isImmuneToFire = true;
     }
 
-    public EntityBlazingHook(World worldIn, EntityPlayer fishingPlayer) {
+    public BlazingFishingBobberEntity(World worldIn, EntityPlayer fishingPlayer) {
         super(worldIn, fishingPlayer);
         this.angler = fishingPlayer;
         this.isImmuneToFire = true;
@@ -144,13 +145,13 @@ public class EntityBlazingHook extends EntityFishHook implements IEntityAddition
                 f = ifluidstate.getHeight();
             }
 
-            if (this.currentState == EntityBlazingHook.State.FLYING) {
+            if (this.currentState == BlazingFishingBobberEntity.State.FLYING) {
 
                 if (this.caughtEntity != null) {
                     this.motionX = 0.0D;
                     this.motionY = 0.0D;
                     this.motionZ = 0.0D;
-                    this.currentState = EntityBlazingHook.State.HOOKED_IN_ENTITY;
+                    this.currentState = BlazingFishingBobberEntity.State.HOOKED_IN_ENTITY;
                     return;
                 }
 
@@ -158,7 +159,7 @@ public class EntityBlazingHook extends EntityFishHook implements IEntityAddition
                     this.motionX *= 0.3D;
                     this.motionY *= 0.2D;
                     this.motionZ *= 0.3D;
-                    this.currentState = EntityBlazingHook.State.BOBBING;
+                    this.currentState = BlazingFishingBobberEntity.State.BOBBING;
                     return;
                 }
 
@@ -176,13 +177,13 @@ public class EntityBlazingHook extends EntityFishHook implements IEntityAddition
                 }
             } else {
 
-                if (this.currentState == EntityBlazingHook.State.HOOKED_IN_ENTITY) {
+                if (this.currentState == BlazingFishingBobberEntity.State.HOOKED_IN_ENTITY) {
 
                     if (this.caughtEntity != null) {
 
                         if (!this.caughtEntity.isAlive()) {
                             this.caughtEntity = null;
-                            this.currentState = EntityBlazingHook.State.FLYING;
+                            this.currentState = BlazingFishingBobberEntity.State.FLYING;
                         } else {
                             this.posX = this.caughtEntity.posX;
                             double d2 = (double)this.caughtEntity.height;
@@ -194,7 +195,7 @@ public class EntityBlazingHook extends EntityFishHook implements IEntityAddition
                     return;
                 }
 
-                if (this.currentState == EntityBlazingHook.State.BOBBING) {
+                if (this.currentState == BlazingFishingBobberEntity.State.BOBBING) {
                     this.motionX *= 0.9D;
                     this.motionZ *= 0.9D;
                     double d0 = this.posY + this.motionY - (double)blockpos.getY() - (double)f;
@@ -238,8 +239,8 @@ public class EntityBlazingHook extends EntityFishHook implements IEntityAddition
     private boolean shouldStopFishing() {
         ItemStack itemstack = this.angler.getHeldItemMainhand();
         ItemStack itemstack1 = this.angler.getHeldItemOffhand();
-        boolean flag = itemstack.getItem() instanceof ItemBlazingFishingRod;
-        boolean flag1 = itemstack1.getItem() instanceof ItemBlazingFishingRod;
+        boolean flag = itemstack.getItem() instanceof BlazingFishingRodItem;
+        boolean flag1 = itemstack1.getItem() instanceof BlazingFishingRodItem;
 
         if (this.angler.isAlive() && (flag || flag1) && !(this.getDistanceSq(this.angler) > 1024.0D)) {
             return false;

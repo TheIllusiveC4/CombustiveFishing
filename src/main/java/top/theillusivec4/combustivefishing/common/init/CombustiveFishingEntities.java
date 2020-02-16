@@ -26,16 +26,16 @@ import top.theillusivec4.combustivefishing.client.renderer.RenderBlazingHook;
 import top.theillusivec4.combustivefishing.client.renderer.RenderCombustiveCod;
 import top.theillusivec4.combustivefishing.client.renderer.RenderSwordfish;
 import top.theillusivec4.combustivefishing.client.renderer.RenderThrownCombustiveCod;
-import top.theillusivec4.combustivefishing.common.entity.EntityBlazingHook;
+import top.theillusivec4.combustivefishing.common.entity.BlazingFishingBobberEntity;
 import top.theillusivec4.combustivefishing.common.entity.EntityCombustiveCod;
 import top.theillusivec4.combustivefishing.common.entity.EntitySearingSwordfish;
-import top.theillusivec4.combustivefishing.common.entity.EntityThrownCombustiveCod;
+import top.theillusivec4.combustivefishing.common.entity.ThrownCombustiveCodEntity;
 
 public class CombustiveFishingEntities {
 
     public static final EntityType<EntityCombustiveCod> COMBUSTIVE_COD;
-    public static final EntityType<EntityThrownCombustiveCod> THROWN_COMBUSTIVE_COD;
-    public static final EntityType<EntityBlazingHook> BLAZING_BOBBER;
+    public static final EntityType<ThrownCombustiveCodEntity> THROWN_COMBUSTIVE_COD;
+    public static final EntityType<BlazingFishingBobberEntity> BLAZING_BOBBER;
     public static final EntityType<EntitySearingSwordfish> SEARING_SWORDFISH;
 
     static {
@@ -49,12 +49,12 @@ public class CombustiveFishingEntities {
                 .build("combustive_cod");
         SEARING_SWORDFISH.setRegistryName(CombustiveFishing.MODID, "searing_swordfish");
 
-        THROWN_COMBUSTIVE_COD = EntityType.Builder.create(EntityThrownCombustiveCod.class, EntityThrownCombustiveCod::new)
+        THROWN_COMBUSTIVE_COD = EntityType.Builder.create(ThrownCombustiveCodEntity.class, ThrownCombustiveCodEntity::new)
                 .tracker(64, 10, true)
                 .build("thrown_combustive_cod");
         THROWN_COMBUSTIVE_COD.setRegistryName(CombustiveFishing.MODID, "thrown_combustive_cod");
 
-        BLAZING_BOBBER = EntityType.Builder.create(EntityBlazingHook.class, EntityBlazingHook::new)
+        BLAZING_BOBBER = EntityType.Builder.create(BlazingFishingBobberEntity.class, BlazingFishingBobberEntity::new)
                 .disableSerialization()
                 .disableSummoning()
                 .tracker(64, 5, true)
@@ -63,8 +63,8 @@ public class CombustiveFishingEntities {
     }
 
     public static void registerEntityRenders() {
-        RenderingRegistry.registerEntityRenderingHandler(EntityBlazingHook.class, RenderBlazingHook::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityThrownCombustiveCod.class, RenderThrownCombustiveCod::new);
+        RenderingRegistry.registerEntityRenderingHandler(BlazingFishingBobberEntity.class, RenderBlazingHook::new);
+        RenderingRegistry.registerEntityRenderingHandler(ThrownCombustiveCodEntity.class, RenderThrownCombustiveCod::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityCombustiveCod.class, RenderCombustiveCod::new);
         RenderingRegistry.registerEntityRenderingHandler(EntitySearingSwordfish.class, RenderSwordfish::new);
     }

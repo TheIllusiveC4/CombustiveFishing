@@ -19,14 +19,17 @@
 
 package top.theillusivec4.combustivefishing.common.item;
 
+import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
+import top.theillusivec4.combustivefishing.common.registry.RegistryReference;
 
-public class ItemSwordfishBill extends ItemHotFish {
+public class CooledBillItem extends Item {
 
-    public ItemSwordfishBill() {
-        super(FishType.SEARING_SWORDFISH, new Item.Properties().group(ItemGroup.MISC));
-        this.setRegistryName(CombustiveFishing.MODID, "swordfish_bill");
-    }
+  public CooledBillItem() {
+    super(new Item.Properties().group(ItemGroup.FOOD)
+        .food(new Food.Builder().hunger(12).saturation(1.6F).build()));
+    this.setRegistryName(CombustiveFishing.MODID, RegistryReference.COOLED_BILL);
+  }
 }

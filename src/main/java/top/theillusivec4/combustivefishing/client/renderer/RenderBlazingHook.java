@@ -32,12 +32,12 @@ import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import top.theillusivec4.combustivefishing.common.entity.EntityBlazingHook;
-import top.theillusivec4.combustivefishing.common.item.ItemBlazingFishingRod;
+import top.theillusivec4.combustivefishing.common.entity.BlazingFishingBobberEntity;
+import top.theillusivec4.combustivefishing.common.item.BlazingFishingRodItem;
 
 import javax.annotation.Nonnull;
 
-public class RenderBlazingHook extends Render<EntityBlazingHook> {
+public class RenderBlazingHook extends Render<BlazingFishingBobberEntity> {
 
     private static final ResourceLocation FISH_PARTICLES = new ResourceLocation("textures/particle/particles.png");
 
@@ -46,7 +46,7 @@ public class RenderBlazingHook extends Render<EntityBlazingHook> {
     }
 
     @Override
-    public void doRender(@Nonnull EntityBlazingHook entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    public void doRender(@Nonnull BlazingFishingBobberEntity entity, double x, double y, double z, float entityYaw, float partialTicks) {
         EntityPlayer entityplayer = entity.getAngler();
 
         if (!this.renderOutlines) {
@@ -80,7 +80,7 @@ public class RenderBlazingHook extends Render<EntityBlazingHook> {
             int k = entityplayer.getPrimaryHand() == EnumHandSide.RIGHT ? 1 : -1;
             ItemStack itemstack = entityplayer.getHeldItemMainhand();
 
-            if (!(itemstack.getItem() instanceof ItemBlazingFishingRod)) {
+            if (!(itemstack.getItem() instanceof BlazingFishingRodItem)) {
                 k = -k;
             }
             float f7 = entityplayer.getSwingProgress(partialTicks);
@@ -134,7 +134,7 @@ public class RenderBlazingHook extends Render<EntityBlazingHook> {
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(@Nonnull EntityBlazingHook entity) {
+    protected ResourceLocation getEntityTexture(@Nonnull BlazingFishingBobberEntity entity) {
         return FISH_PARTICLES;
     }
 }
