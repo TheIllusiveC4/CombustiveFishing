@@ -26,11 +26,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.client.model.ModelSwordfish;
-import top.theillusivec4.combustivefishing.common.entity.EntitySearingSwordfish;
+import top.theillusivec4.combustivefishing.common.entity.SearingSwordfishEntity;
 
 import javax.annotation.Nonnull;
 
-public class RenderSwordfish extends RenderLiving<EntitySearingSwordfish> {
+public class RenderSwordfish extends RenderLiving<SearingSwordfishEntity> {
 
     private static final ResourceLocation SWORDFISH_LOCATION = new ResourceLocation(CombustiveFishing.MODID, "textures/entity/swordfish.png");
 
@@ -39,12 +39,12 @@ public class RenderSwordfish extends RenderLiving<EntitySearingSwordfish> {
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(@Nonnull EntitySearingSwordfish entity) {
+    protected ResourceLocation getEntityTexture(@Nonnull SearingSwordfishEntity entity) {
         return SWORDFISH_LOCATION;
     }
 
     @Override
-    protected void applyRotations(EntitySearingSwordfish entityLiving, float ageInTicks, float rotationYaw, float partialTicks) {
+    protected void applyRotations(SearingSwordfishEntity entityLiving, float ageInTicks, float rotationYaw, float partialTicks) {
         super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
         float f = 4.3F * MathHelper.sin(0.6F * ageInTicks);
         GlStateManager.rotatef(f, 0.0F, 1.0F, 0.0F);

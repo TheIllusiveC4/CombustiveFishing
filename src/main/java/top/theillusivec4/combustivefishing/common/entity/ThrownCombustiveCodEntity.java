@@ -19,54 +19,78 @@
 
 package top.theillusivec4.combustivefishing.common.entity;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.Particles;
+import javax.annotation.Nonnull;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ProjectileItemEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ItemParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingItems;
 
-import javax.annotation.Nonnull;
+public class ThrownCombustiveCodEntity extends ProjectileItemEntity {
 
-public class ThrownCombustiveCodEntity extends EntityThrowable {
+  public ThrownCombustiveCodEntity(World worldIn) {
+    super(CombustiveFishingEntities.THROWN_COMBUSTIVE_COD, worldIn);
+  }
 
-    public ThrownCombustiveCodEntity(World worldIn) {
-        super(CombustiveFishingEntities.THROWN_COMBUSTIVE_COD, worldIn);
+  public ThrownCombustiveCodEntity(World worldIn, LivingEntity throwerIn) {
+    super(CombustiveFishingEntities.THROWN_COMBUSTIVE_COD, throwerIn, worldIn);
+  }
+
+  public ThrownCombustiveCodEntity(World worldIn, double x, double y, double z) {
+    super(CombustiveFishingEntities.THROWN_COMBUSTIVE_COD, x, y, z, worldIn);
+  }
+
+  @Nonnull
+  @Override
+  protected Item getDefaultItem() {
+    return CombustiveFishingItems.COMBUSTIVE_COD;
+  }
+
+  private IParticleData makeParticle() {
+    ItemStack itemstack = this.func_213882_k();
+    return itemstack.isEmpty() ? ParticleTypes.FLAME
+        : new ItemParticleData(ParticleTypes.ITEM, itemstack);
+  }
+
+  @OnlyIn(Dist.CLIENT)
+  @Override
+  public void handleStatusUpdate(byte id) {
+    if (id == 3) {
+      IParticleData iparticledata = this.makeParticle();
+
+      for (int i = 0; i < 8; ++i) {
+        this.world.addParticle(iparticledata, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+      }
     }
 
-    public ThrownCombustiveCodEntity(World worldIn, EntityLivingBase throwerIn) {
-        super(CombustiveFishingEntities.THROWN_COMBUSTIVE_COD, throwerIn, worldIn);
+  }
+
+  @Override
+  protected void onImpact(@Nonnull RayTraceResult result) {
+
+    if (result.getType() == RayTraceResult.Type.ENTITY) {
+      Entity entity = ((EntityRayTraceResult) result).getEntity();
+      entity
+          .attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()).setFireDamage(),
+              1.0F);
     }
 
-    public ThrownCombustiveCodEntity(World worldIn, double x, double y, double z) {
-        super(CombustiveFishingEntities.THROWN_COMBUSTIVE_COD, x, y, z, worldIn);
+    if (!this.world.isRemote) {
+      this.world.createExplosion(null, this.posX, this.posY, this.posZ, 1, true, Mode.BREAK);
+      this.world.setEntityState(this, (byte) 3);
+      this.remove();
     }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte id) {
-
-        if (id == 3) {
-            for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(Particles.FLAME, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-            }
-        }
-    }
-
-    @Override
-    protected void onImpact(@Nonnull RayTraceResult result) {
-
-        if (result.entity != null) {
-            result.entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()).setFireDamage(), 1.0F);
-        }
-
-        if (!this.world.isRemote) {
-            this.world.newExplosion(null, this.posX, this.posY, this.posZ, 1, true, true);
-            this.world.setEntityState(this, (byte)3);
-            this.remove();
-        }
-    }
+  }
 }

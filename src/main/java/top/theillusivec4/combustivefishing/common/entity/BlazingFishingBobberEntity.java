@@ -30,7 +30,9 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.EntityFishHook;
+import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.init.Particles;
 import net.minecraft.init.SoundEvents;
@@ -58,7 +60,7 @@ import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
-public class BlazingFishingBobberEntity extends EntityFishHook implements IEntityAdditionalSpawnData {
+public class BlazingFishingBobberEntity extends FishingBobberEntity implements IEntityAdditionalSpawnData {
 
     private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.createKey(
         BlazingFishingBobberEntity.class, DataSerializers.VARINT);
@@ -72,14 +74,14 @@ public class BlazingFishingBobberEntity extends EntityFishHook implements IEntit
     private float fishApproachAngle;
     private int lureSpeed;
     private int luck;
-    private EntityPlayer angler;
+    private PlayerEntity angler;
 
     public BlazingFishingBobberEntity(World worldIn) {
         super(worldIn, Minecraft.getInstance().player, 0, 0, 0);
         this.isImmuneToFire = true;
     }
 
-    public BlazingFishingBobberEntity(World worldIn, EntityPlayer fishingPlayer) {
+    public BlazingFishingBobberEntity(World worldIn, PlayerEntity fishingPlayer) {
         super(worldIn, fishingPlayer);
         this.angler = fishingPlayer;
         this.isImmuneToFire = true;
@@ -92,7 +94,7 @@ public class BlazingFishingBobberEntity extends EntityFishHook implements IEntit
 
     @Override
     public void readSpawnData(PacketBuffer additionalData) {
-        this.angler = (EntityPlayer)Minecraft.getInstance().world.getEntityByID(additionalData.readInt());
+        this.angler = (PlayerEntity)Minecraft.getInstance().world.getEntityByID(additionalData.readInt());
     }
 
     @Nonnull
@@ -508,8 +510,7 @@ public class BlazingFishingBobberEntity extends EntityFishHook implements IEntit
         }
     }
 
-    enum State
-    {
+    enum State {
         FLYING,
         HOOKED_IN_ENTITY,
         BOBBING;

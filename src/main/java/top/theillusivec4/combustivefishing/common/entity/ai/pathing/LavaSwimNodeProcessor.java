@@ -19,80 +19,82 @@
 
 package top.theillusivec4.combustivefishing.common.entity.ai.pathing;
 
-import net.minecraft.block.state.IBlockState;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import net.minecraft.block.BlockState;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.PathPoint;
-import net.minecraft.pathfinding.PathType;
 import net.minecraft.pathfinding.SwimNodeProcessor;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 public class LavaSwimNodeProcessor extends SwimNodeProcessor {
 
-    private boolean isSwordfish;
+  private boolean isSwordfish;
 
-    public LavaSwimNodeProcessor(boolean isSwordfish) {
-        super(isSwordfish);
-        this.isSwordfish = isSwordfish;
+  public LavaSwimNodeProcessor(boolean isSwordfish) {
+    super(isSwordfish);
+    this.isSwordfish = isSwordfish;
+  }
+
+  @Override
+  public int func_222859_a(@Nonnull PathPoint[] p_222859_1_, @Nonnull PathPoint p_222859_2_) {
+    int i = 0;
+
+    for (Direction direction : Direction.values()) {
+      PathPoint pathpoint = this.getLavaNode(p_222859_2_.x + direction.getXOffset(),
+          p_222859_2_.y + direction.getYOffset(), p_222859_2_.z + direction.getZOffset());
+      if (pathpoint != null && !pathpoint.visited) {
+        p_222859_1_[i++] = pathpoint;
+      }
     }
+    return i;
+  }
 
-    @Override
-    public int findPathOptions(@Nonnull PathPoint[] pathOptions, @Nonnull PathPoint currentPoint, @Nonnull PathPoint targetPoint, float maxDistance) {
-        int i = 0;
+  @Nullable
+  private PathPoint getLavaNode(int p_186328_1_, int p_186328_2_, int p_186328_3_) {
+    PathNodeType pathnodetype = this.isFree(p_186328_1_, p_186328_2_, p_186328_3_);
+    return (!this.isSwordfish || pathnodetype != PathNodeType.BREACH)
+        && pathnodetype != PathNodeType.LAVA ? null
+        : this.openPoint(p_186328_1_, p_186328_2_, p_186328_3_);
+  }
 
-        for(EnumFacing enumfacing : EnumFacing.values()) {
-            PathPoint pathpoint = this.getLavaNode(currentPoint.x + enumfacing.getXOffset(), currentPoint.y + enumfacing.getYOffset(), currentPoint.z + enumfacing.getZOffset());
-            if (pathpoint != null && !pathpoint.visited && pathpoint.distanceTo(targetPoint) < maxDistance) {
-                pathOptions[i++] = pathpoint;
-            }
-        }
-
-        return i;
+  @Nonnull
+  @Override
+  public PathNodeType getPathNodeType(IBlockReader blockaccessIn, int x, int y, int z) {
+    BlockPos blockpos = new BlockPos(x, y, z);
+    IFluidState ifluidstate = blockaccessIn.getFluidState(blockpos);
+    BlockState blockstate = blockaccessIn.getBlockState(blockpos);
+    if (ifluidstate.isEmpty() && blockstate.isAir(blockaccessIn, blockpos)) {
+      return PathNodeType.BREACH;
+    } else {
+      return ifluidstate.isTagged(FluidTags.LAVA) ? PathNodeType.LAVA : PathNodeType.BLOCKED;
     }
+  }
 
-    @Nullable
-    private PathPoint getLavaNode(int p_186328_1_, int p_186328_2_, int p_186328_3_) {
-        PathNodeType pathnodetype = this.isFree(p_186328_1_, p_186328_2_, p_186328_3_);
-        return (!this.isSwordfish || pathnodetype != PathNodeType.BREACH) && pathnodetype != PathNodeType.LAVA ? null : this.openPoint(p_186328_1_, p_186328_2_, p_186328_3_);
-    }
+  private PathNodeType isFree(int p_186327_1_, int p_186327_2_, int p_186327_3_) {
+    BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-    @Nonnull
-    @Override
-    public PathNodeType getPathNodeType(IBlockReader blockaccessIn, int x, int y, int z) {
-        BlockPos blockpos = new BlockPos(x, y, z);
-        IFluidState ifluidstate = blockaccessIn.getFluidState(blockpos);
-        IBlockState iblockstate = blockaccessIn.getBlockState(blockpos);
-        if (ifluidstate.isEmpty() && iblockstate.isAir(blockaccessIn, blockpos)) {
+    for (int i = p_186327_1_; i < p_186327_1_ + this.entitySizeX; ++i) {
+      for (int j = p_186327_2_; j < p_186327_2_ + this.entitySizeY; ++j) {
+        for (int k = p_186327_3_; k < p_186327_3_ + this.entitySizeZ; ++k) {
+          IFluidState ifluidstate = this.blockaccess
+              .getFluidState(blockpos$mutableblockpos.setPos(i, j, k));
+          BlockState blockstate = this.blockaccess
+              .getBlockState(blockpos$mutableblockpos.setPos(i, j, k));
+          if (ifluidstate.isEmpty() && blockstate.isAir(blockaccess, blockpos$mutableblockpos)) {
             return PathNodeType.BREACH;
-        } else {
-            return ifluidstate.isTagged(FluidTags.LAVA) ? PathNodeType.LAVA : PathNodeType.BLOCKED;
+          }
+
+          if (!ifluidstate.isTagged(FluidTags.LAVA)) {
+            return PathNodeType.BLOCKED;
+          }
         }
+      }
     }
-
-    private PathNodeType isFree(int p_186327_1_, int p_186327_2_, int p_186327_3_) {
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-
-        for(int i = p_186327_1_; i < p_186327_1_ + this.entitySizeX; ++i) {
-            for(int j = p_186327_2_; j < p_186327_2_ + this.entitySizeY; ++j) {
-                for(int k = p_186327_3_; k < p_186327_3_ + this.entitySizeZ; ++k) {
-                    IFluidState ifluidstate = this.blockaccess.getFluidState(blockpos$mutableblockpos.setPos(i, j, k));
-                    IBlockState iblockstate = this.blockaccess.getBlockState(blockpos$mutableblockpos.setPos(i, j, k));
-                    if (ifluidstate.isEmpty() && iblockstate.allowsMovement(this.blockaccess, blockpos$mutableblockpos.down(), PathType.WATER) && iblockstate.isAir()) {
-                        return PathNodeType.BREACH;
-                    }
-
-                    if (!ifluidstate.isTagged(FluidTags.LAVA)) {
-                        return PathNodeType.BLOCKED;
-                    }
-                }
-            }
-        }
-        return PathNodeType.LAVA;
-    }
+    return PathNodeType.LAVA;
+  }
 }

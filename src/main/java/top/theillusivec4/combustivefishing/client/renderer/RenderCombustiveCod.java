@@ -26,12 +26,12 @@ import net.minecraft.client.renderer.entity.model.ModelCod;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
-import top.theillusivec4.combustivefishing.common.entity.EntityCombustiveCod;
+import top.theillusivec4.combustivefishing.common.entity.CombustiveCodEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RenderCombustiveCod extends RenderLiving<EntityCombustiveCod> {
+public class RenderCombustiveCod extends RenderLiving<CombustiveCodEntity> {
     private static final ResourceLocation COD_LOCATION = new ResourceLocation(CombustiveFishing.MODID, "textures/entity/combustive_cod.png");
 
     public RenderCombustiveCod(RenderManager renderManager) {
@@ -40,12 +40,12 @@ public class RenderCombustiveCod extends RenderLiving<EntityCombustiveCod> {
 
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(@Nonnull EntityCombustiveCod entity) {
+    protected ResourceLocation getEntityTexture(@Nonnull CombustiveCodEntity entity) {
         return COD_LOCATION;
     }
 
     @Override
-    protected void applyRotations(EntityCombustiveCod entityLiving, float ageInTicks, float rotationYaw, float partialTicks) {
+    protected void applyRotations(CombustiveCodEntity entityLiving, float ageInTicks, float rotationYaw, float partialTicks) {
         super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
         float f = 4.3F * MathHelper.sin(0.6F * ageInTicks);
         GlStateManager.rotatef(f, 0.0F, 1.0F, 0.0F);

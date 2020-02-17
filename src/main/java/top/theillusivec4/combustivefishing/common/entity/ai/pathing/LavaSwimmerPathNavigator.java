@@ -19,26 +19,25 @@
 
 package top.theillusivec4.combustivefishing.common.entity.ai.pathing;
 
-import net.minecraft.entity.EntityLiving;
+import javax.annotation.Nonnull;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.pathfinding.PathFinder;
-import net.minecraft.pathfinding.PathNavigateSwimmer;
+import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-
-public class PathNavigateLavaSwimmer extends PathNavigateSwimmer {
+public class LavaSwimmerPathNavigator extends SwimmerPathNavigator {
 
     private boolean isSwordfish;
 
-    public PathNavigateLavaSwimmer(EntityLiving entitylivingIn, World worldIn) {
-        super(entitylivingIn, worldIn);
+    public LavaSwimmerPathNavigator(MobEntity mobEntity, World worldIn) {
+        super(mobEntity, worldIn);
     }
 
     @Nonnull
     @Override
-    protected PathFinder getPathFinder() {
+    protected PathFinder getPathFinder(int param1) {
         this.isSwordfish = false;
         this.nodeProcessor = new LavaSwimNodeProcessor(isSwordfish);
-        return new PathFinder(this.nodeProcessor);
+        return new PathFinder(this.nodeProcessor, param1);
     }
 }
