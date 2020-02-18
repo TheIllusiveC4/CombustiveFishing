@@ -20,17 +20,19 @@
 package top.theillusivec4.combustivefishing.common.init;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.FishRenderer;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
-import top.theillusivec4.combustivefishing.client.renderer.RenderBlazingHook;
-import top.theillusivec4.combustivefishing.client.renderer.RenderCombustiveCod;
-import top.theillusivec4.combustivefishing.client.renderer.RenderSwordfish;
+import top.theillusivec4.combustivefishing.client.renderer.CombustiveCodRender;
+import top.theillusivec4.combustivefishing.client.renderer.SwordfishRender;
 import top.theillusivec4.combustivefishing.common.entity.BlazingFishingBobberEntity;
 import top.theillusivec4.combustivefishing.common.entity.CombustiveCodEntity;
 import top.theillusivec4.combustivefishing.common.entity.SearingSwordfishEntity;
 import top.theillusivec4.combustivefishing.common.entity.ThrownCombustiveCodEntity;
+import top.theillusivec4.combustivefishing.common.registry.RegistryReference;
 
 public class CombustiveFishingEntities {
 
@@ -40,34 +42,41 @@ public class CombustiveFishingEntities {
   public static final EntityType<SearingSwordfishEntity> SEARING_SWORDFISH;
 
   static {
-    COMBUSTIVE_COD = EntityType.Builder.create(CombustiveCodEntity.class, CombustiveCodEntity::new)
-        .tracker(80, 3, true).build("combustive_cod");
-    COMBUSTIVE_COD.setRegistryName(CombustiveFishing.MODID, "combustive_cod");
+    COMBUSTIVE_COD = EntityType.Builder
+        .<CombustiveCodEntity>create((entityType, world) -> new CombustiveCodEntity(world),
+            EntityClassification.WATER_CREATURE).size(0.5F, 0.3F).immuneToFire()
+        .setTrackingRange(80).setUpdateInterval(3).setShouldReceiveVelocityUpdates(true)
+        .build(RegistryReference.COMBUSTIVE_COD);
+    COMBUSTIVE_COD.setRegistryName(CombustiveFishing.MODID, RegistryReference.COMBUSTIVE_COD);
 
     SEARING_SWORDFISH = EntityType.Builder
-        .create(SearingSwordfishEntity.class, SearingSwordfishEntity::new).tracker(80, 3, true)
-        .build("combustive_cod");
-    SEARING_SWORDFISH.setRegistryName(CombustiveFishing.MODID, "searing_swordfish");
+        .<SearingSwordfishEntity>create((entityType, world) -> new SearingSwordfishEntity(world),
+            EntityClassification.WATER_CREATURE).setTrackingRange(80).setUpdateInterval(3)
+        .setShouldReceiveVelocityUpdates(true).build(RegistryReference.SEARING_SWORDFISH);
+    SEARING_SWORDFISH.setRegistryName(CombustiveFishing.MODID, RegistryReference.SEARING_SWORDFISH);
 
     THROWN_COMBUSTIVE_COD = EntityType.Builder
-        .create(ThrownCombustiveCodEntity.class, ThrownCombustiveCodEntity::new)
-        .tracker(64, 10, true).build("thrown_combustive_cod");
-    THROWN_COMBUSTIVE_COD.setRegistryName(CombustiveFishing.MODID, "thrown_combustive_cod");
+        .<ThrownCombustiveCodEntity>create((entityType, world) -> new ThrownCombustiveCodEntity(world),
+            EntityClassification.MISC).setTrackingRange(64).setUpdateInterval(10)
+        .setShouldReceiveVelocityUpdates(true).build(RegistryReference.THROWN_COD);
+    THROWN_COMBUSTIVE_COD.setRegistryName(CombustiveFishing.MODID, RegistryReference.THROWN_COD);
 
     BLAZING_BOBBER = EntityType.Builder
-        .create(BlazingFishingBobberEntity.class, BlazingFishingBobberEntity::new)
-        .disableSerialization().disableSummoning().tracker(64, 5, true).build("blazing_bobber");
-    BLAZING_BOBBER.setRegistryName(CombustiveFishing.MODID, "blazing_bobber");
+        .<BlazingFishingBobberEntity>create((entityType, world) -> new BlazingFishingBobberEntity(world),
+            EntityClassification.MISC).disableSerialization().disableSummoning()
+        .setTrackingRange(64).setUpdateInterval(5).setShouldReceiveVelocityUpdates(true)
+        .build(RegistryReference.BLAZING_BOBBER);
+    BLAZING_BOBBER.setRegistryName(CombustiveFishing.MODID, RegistryReference.BLAZING_BOBBER);
   }
 
   public static void registerEntityRenders(Minecraft mc) {
     RenderingRegistry.registerEntityRenderingHandler(ThrownCombustiveCodEntity.class,
         (rendererManager) -> new SpriteRenderer<>(rendererManager, mc.getItemRenderer()));
     RenderingRegistry
-        .registerEntityRenderingHandler(BlazingFishingBobberEntity.class, RenderBlazingHook::new);
+        .registerEntityRenderingHandler(BlazingFishingBobberEntity.class, FishRenderer::new);
     RenderingRegistry
-        .registerEntityRenderingHandler(CombustiveCodEntity.class, RenderCombustiveCod::new);
+        .registerEntityRenderingHandler(CombustiveCodEntity.class, CombustiveCodRender::new);
     RenderingRegistry
-        .registerEntityRenderingHandler(SearingSwordfishEntity.class, RenderSwordfish::new);
+        .registerEntityRenderingHandler(SearingSwordfishEntity.class, SwordfishRender::new);
   }
 }

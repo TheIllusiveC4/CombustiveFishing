@@ -9,4 +9,7 @@ public class RegistryReference {
   public static final String SWORDFISH_BILL = "swordfish_bill";
   public static final String COOLED_BILL = "cooled_bill";
   public static final String SEARING_SWORD = "searing_sword";
+  public static final String SEARING_SWORDFISH = "searing_swordfish";
+  public static final String THROWN_COD = "thrown_combustive_cod";
+  public static final String BLAZING_BOBBER = "blazing_bobber";
 }

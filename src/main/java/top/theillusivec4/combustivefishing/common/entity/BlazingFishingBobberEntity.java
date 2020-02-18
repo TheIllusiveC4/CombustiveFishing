@@ -78,13 +78,11 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements I
 
     public BlazingFishingBobberEntity(World worldIn) {
         super(worldIn, Minecraft.getInstance().player, 0, 0, 0);
-        this.isImmuneToFire = true;
     }
 
     public BlazingFishingBobberEntity(World worldIn, PlayerEntity fishingPlayer) {
         super(worldIn, fishingPlayer);
         this.angler = fishingPlayer;
-        this.isImmuneToFire = true;
     }
 
     @Override

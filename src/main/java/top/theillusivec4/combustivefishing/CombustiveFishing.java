@@ -20,13 +20,7 @@
 package top.theillusivec4.combustivefishing;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraft.world.storage.loot.LootTables;
-import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -55,21 +49,5 @@ public class CombustiveFishing {
   private void clientSetup(final FMLClientSetupEvent evt) {
     Minecraft mc = evt.getMinecraftSupplier().get();
     CombustiveFishingEntities.registerEntityRenders(mc);
-  }
-
-  @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-  public static class Events {
-
-    @SubscribeEvent
-    public static void onPigmanLootTableLoad(final LootTableLoadEvent evt) {
-
-      if (evt.getName().equals(LootTables.)) {
-        LootTable lootTable = evt.getTable();
-        LootTable inject = evt.getLootTableManager()
-            .getLootTableFromLocation(CombustiveFishingLoot.PIGMAN_INJECT);
-        lootTable.addPool(inject.getPool("blazing_fishing_rod"));
-        lootTable.addPool(inject.getPool("nether_fish"));
-      }
-    }
   }
 }
