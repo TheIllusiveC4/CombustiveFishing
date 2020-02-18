@@ -57,6 +57,7 @@ public class CombustiveCodItem extends HotFishItem {
 
     if (!worldIn.isRemote) {
       ThrownCombustiveCodEntity throwncod = new ThrownCombustiveCodEntity(worldIn, playerIn);
+      throwncod.setItem(itemstack);
       throwncod.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
       worldIn.addEntity(throwncod);
     }

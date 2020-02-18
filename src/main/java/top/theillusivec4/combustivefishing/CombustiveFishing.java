@@ -19,7 +19,6 @@
 
 package top.theillusivec4.combustivefishing;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -28,7 +27,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
-import top.theillusivec4.combustivefishing.common.init.CombustiveFishingLoot;
 
 @Mod(CombustiveFishing.MODID)
 public class CombustiveFishing {
@@ -42,7 +40,6 @@ public class CombustiveFishing {
   }
 
   private void clientSetup(final FMLClientSetupEvent evt) {
-    Minecraft mc = evt.getMinecraftSupplier().get();
-    CombustiveFishingEntities.registerEntityRenders(mc);
+    CombustiveFishingEntities.registerEntityRenders();
   }
 }

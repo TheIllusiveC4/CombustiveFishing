@@ -21,10 +21,12 @@ package top.theillusivec4.combustivefishing.common.entity;
 
 import javax.annotation.Nonnull;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.IPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
@@ -35,6 +37,7 @@ import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.NetworkHooks;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingItems;
 
@@ -92,5 +95,11 @@ public class ThrownCombustiveCodEntity extends ProjectileItemEntity {
       this.world.setEntityState(this, (byte) 3);
       this.remove();
     }
+  }
+
+  @Nonnull
+  @Override
+  public IPacket<?> createSpawnPacket() {
+    return NetworkHooks.getEntitySpawningPacket(this);
   }
 }

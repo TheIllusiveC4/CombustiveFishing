@@ -22,7 +22,6 @@ package top.theillusivec4.combustivefishing.common.entity;
 import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.WaterMobEntity;
@@ -36,7 +35,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameterSets;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public abstract class LavaMobEntity extends WaterMobEntity {
@@ -65,8 +63,13 @@ public abstract class LavaMobEntity extends WaterMobEntity {
         LootTable loottable = server.getLootTableManager()
             .getLootTableFromLocation(resourcelocation);
         LootContext.Builder lootcontext = this.getLootContextBuilder(wasRecentlyHit, source);
-        loottable.generate(lootcontext.build(LootParameterSets.ENTITY),
-            (itemStack) -> ItemHandlerHelper.giveItemToPlayer(this.attackingPlayer, itemStack));
+        loottable.generate(lootcontext.build(LootParameterSets.ENTITY), (itemStack) -> {
+          if (wasRecentlyHit) {
+            ItemHandlerHelper.giveItemToPlayer(this.attackingPlayer, itemStack);
+          } else {
+            this.entityDropItem(itemStack);
+          }
+        });
       }
     } else {
       super.dropLoot(source, wasRecentlyHit);
@@ -102,7 +105,6 @@ public abstract class LavaMobEntity extends WaterMobEntity {
           this.posZ, stack);
       itemEntity.setDefaultPickupDelay();
       itemEntity.setInvulnerable(true);
-      ObfuscationReflectionHelper.setPrivateValue(Entity.class, itemEntity, true, "field_70178_ae");
       Collection<ItemEntity> captureDrops = captureDrops();
 
       if (captureDrops != null) {

@@ -37,6 +37,7 @@ import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -63,6 +64,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTables;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.network.NetworkHooks;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingLoot;
 import top.theillusivec4.combustivefishing.common.item.BlazingFishingRodItem;
@@ -96,6 +98,12 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
     this.angler = fishingPlayer;
     this.luck = Math.max(0, luck);
     this.lureSpeed = Math.max(0, lureSpeed);
+  }
+
+  @Nonnull
+  @Override
+  public IPacket<?> createSpawnPacket() {
+    return NetworkHooks.getEntitySpawningPacket(this);
   }
 
   @Nonnull
