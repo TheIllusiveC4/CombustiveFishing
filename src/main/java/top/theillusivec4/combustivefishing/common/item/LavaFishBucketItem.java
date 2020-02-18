@@ -36,7 +36,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import top.theillusivec4.combustivefishing.common.entity.AbstractLavaFish;
+import top.theillusivec4.combustivefishing.common.entity.AbstractLavaFishEntity;
 
 public class LavaFishBucketItem extends BucketItem {
 
@@ -68,7 +68,7 @@ public class LavaFishBucketItem extends BucketItem {
         .spawn(worldIn, stack, null, pos, SpawnReason.BUCKET, true, false);
 
     if (entity != null) {
-      ((AbstractLavaFish) entity).setFromBucket(true);
+      ((AbstractLavaFishEntity) entity).setFromBucket(true);
     }
   }
 

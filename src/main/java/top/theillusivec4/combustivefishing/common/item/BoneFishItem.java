@@ -46,12 +46,12 @@ import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingItems;
 import top.theillusivec4.combustivefishing.common.registry.RegistryReference;
 
-public class ItemBoneFish extends Item {
+public class BoneFishItem extends Item {
 
   private static final Method SET_TRUSTING = ObfuscationReflectionHelper
-      .findMethod(OcelotEntity.class, "func_213528_r", Boolean.class);
+      .findMethod(OcelotEntity.class, "func_213528_r", boolean.class);
 
-  public ItemBoneFish() {
+  public BoneFishItem() {
     super(new Item.Properties().group(ItemGroup.MISC));
     this.setRegistryName(CombustiveFishing.MODID, RegistryReference.BONE_FISH);
     MinecraftForge.EVENT_BUS.register(this);

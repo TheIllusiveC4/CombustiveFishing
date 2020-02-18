@@ -23,7 +23,7 @@ import top.theillusivec4.combustivefishing.common.item.BlazingFishingRodItem;
 import top.theillusivec4.combustivefishing.common.item.CombustiveCodItem;
 import top.theillusivec4.combustivefishing.common.item.CooledBillItem;
 import top.theillusivec4.combustivefishing.common.item.CooledCodItem;
-import top.theillusivec4.combustivefishing.common.item.ItemBoneFish;
+import top.theillusivec4.combustivefishing.common.item.BoneFishItem;
 import top.theillusivec4.combustivefishing.common.item.LavaFishBucketItem;
 import top.theillusivec4.combustivefishing.common.item.SearingSwordItem;
 import top.theillusivec4.combustivefishing.common.item.SwordfishBillItem;
@@ -42,7 +42,7 @@ public class RegistryEventHandler {
         new SpawnEggItem(CombustiveFishingEntities.SEARING_SWORDFISH, 13045262, 16757683,
             new Item.Properties().group(ItemGroup.MISC))
             .setRegistryName(CombustiveFishing.MODID, "searing_swordfish_spawn_egg"),
-        new CooledCodItem(), new ItemBoneFish(), new SwordfishBillItem(), new CooledBillItem(),
+        new CooledCodItem(), new BoneFishItem(), new SwordfishBillItem(), new CooledBillItem(),
         new SearingSwordItem());
   }
 

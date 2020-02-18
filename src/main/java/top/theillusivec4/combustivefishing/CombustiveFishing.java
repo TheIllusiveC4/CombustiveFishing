@@ -38,12 +38,7 @@ public class CombustiveFishing {
 
   public CombustiveFishing() {
     IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-    eventBus.addListener(this::setup);
     eventBus.addListener(this::clientSetup);
-  }
-
-  private void setup(final FMLCommonSetupEvent evt) {
-    CombustiveFishingLoot.registerLootTables();
   }
 
   private void clientSetup(final FMLClientSetupEvent evt) {
