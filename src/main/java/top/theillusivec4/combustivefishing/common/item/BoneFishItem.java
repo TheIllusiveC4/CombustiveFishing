@@ -20,6 +20,7 @@
 package top.theillusivec4.combustivefishing.common.item;
 
 import com.google.common.collect.Lists;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
@@ -62,18 +63,26 @@ public class BoneFishItem extends Item {
     Entity entity = evt.getEntity();
 
     if (!entity.world.isRemote && entity instanceof OcelotEntity) {
-      OcelotEntity ocelot = (OcelotEntity) entity;
-      TemptGoal temptGoal = ObfuscationReflectionHelper
-          .getPrivateValue(OcelotEntity.class, ocelot, "field_70914_e");
-      Ingredient breedingItems = ObfuscationReflectionHelper
-          .getPrivateValue(OcelotEntity.class, ocelot, "field_195402_bB");
-      ocelot.goalSelector.removeGoal(temptGoal);
-      Ingredient newBreedingItems = Ingredient.merge(Lists
-          .newArrayList(breedingItems, Ingredient.fromItems(CombustiveFishingItems.BONE_FISH)));
-      TemptGoal newTemptGoal = new TemptGoal(ocelot, 0.6D, newBreedingItems, true);
-      ocelot.goalSelector.addGoal(3, newTemptGoal);
-      ObfuscationReflectionHelper
-          .setPrivateValue(OcelotEntity.class, ocelot, newTemptGoal, "field_70914_e");
+      try {
+        OcelotEntity ocelot = (OcelotEntity) entity;
+        TemptGoal temptGoal = ObfuscationReflectionHelper
+            .getPrivateValue(OcelotEntity.class, ocelot, "field_70914_e");
+        Ingredient breedingItems = ObfuscationReflectionHelper
+            .getPrivateValue(OcelotEntity.class, ocelot, "field_195402_bB");
+        ocelot.goalSelector.removeGoal(temptGoal);
+        Ingredient newBreedingItems = Ingredient.merge(Lists
+            .newArrayList(breedingItems, Ingredient.fromItems(CombustiveFishingItems.BONE_FISH)));
+        Class<?> temptClass = OcelotEntity.class.getDeclaredClasses()[0];
+        Constructor<?> temptConstructor = temptClass.getDeclaredConstructors()[0];
+        temptConstructor.setAccessible(true);
+        TemptGoal newTemptGoal = (TemptGoal) temptConstructor
+            .newInstance(ocelot, 0.6D, newBreedingItems, true);
+        ocelot.goalSelector.addGoal(3, newTemptGoal);
+        ObfuscationReflectionHelper
+            .setPrivateValue(OcelotEntity.class, ocelot, newTemptGoal, "field_70914_e");
+      } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        CombustiveFishing.LOGGER.error("Error instantiating new tempt goal for ocelot " + entity);
+      }
     }
   }
 
@@ -121,7 +130,7 @@ public class BoneFishItem extends Item {
 
         if (!wolf.world.isRemote) {
 
-          if (random.nextInt(3) == 0 && ForgeEventFactory.onAnimalTame(wolf, playerIn)) {
+          if (random.nextInt(3) == 0 && !ForgeEventFactory.onAnimalTame(wolf, playerIn)) {
             wolf.setTamedBy(playerIn);
             wolf.getNavigator().clearPath();
             wolf.setAttackTarget(null);

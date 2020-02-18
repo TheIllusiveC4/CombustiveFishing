@@ -485,21 +485,15 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
               .trigger((ServerPlayerEntity) this.angler, itemStack, this, list);
 
           for (ItemStack itemstack : list) {
-            ItemEntity itementity = new ItemEntity(this.world, this.posX, this.posY + 1.0D,
+            ItemEntity itementity = new ItemEntity(this.world, this.posX, this.posY + 2.0D,
                 this.posZ, itemstack);
             double d0 = this.angler.posX - this.posX;
             double d1 = this.angler.posY - this.posY;
             double d2 = this.angler.posZ - this.posZ;
             double d3 = MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
             double d4 = 0.1D;
-
-            if (isInLava()) {
-              d4 *= 2;
-              ObfuscationReflectionHelper
-                  .setPrivateValue(Entity.class, itementity, true, "field_70178_ae");
-            }
-            itementity.setMotion(d0 * 0.1D,
-                d1 * 0.1D + Math.sqrt(Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2)) * 0.08D, d2 * 0.1D);
+            itementity.setMotion(d0 * d4,
+                d1 * d4 + Math.sqrt(d3) * 0.08D, d2 * d4);
             this.world.addEntity(itementity);
             this.angler.world.addEntity(new ExperienceOrbEntity(this.angler.world, this.angler.posX,
                 this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(6) + 1));

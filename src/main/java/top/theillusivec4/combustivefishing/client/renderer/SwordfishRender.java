@@ -36,7 +36,7 @@ public class SwordfishRender extends
       CombustiveFishing.MODID, "textures/entity/swordfish.png");
 
   public SwordfishRender(EntityRendererManager renderManagerIn) {
-    super(renderManagerIn, new SwordfishModel(), 0.7F);
+    super(renderManagerIn, new SwordfishModel<>(), 0.7F);
   }
 
   @Nullable

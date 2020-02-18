@@ -99,11 +99,8 @@ public class SwordfishModel<T extends Entity> extends EntityModel<T> {
         this.fin_right, this.fin_top, this.body, this.tail, this.sword, this.bill);
 
     if (Entity.horizontalMag(entityIn.getMotion()) > 1.0E-7D) {
-      this.tail.rotateAngleX = -0.1F * MathHelper.cos(ageInTicks * 0.3F);
-      this.fin_left.rotateAngleX = -0.2F * MathHelper.cos(ageInTicks * 0.3F);
-      this.fin_top.rotateAngleX = -0.2F * MathHelper.cos(ageInTicks * 0.3F);
-      this.fin_right.rotateAngleX = -0.2F * MathHelper.cos(ageInTicks * 0.3F);
-      this.fin_tail.rotateAngleX = -0.2F * MathHelper.cos(ageInTicks * 0.3F);
+      this.tail.rotateAngleY = -0.1F * MathHelper.cos(ageInTicks * 0.3F);
+      this.fin_tail.rotateAngleY = -0.2F * MathHelper.cos(ageInTicks * 0.3F);
     }
   }
 
@@ -118,7 +115,5 @@ public class SwordfishModel<T extends Entity> extends EntityModel<T> {
         rendererModel.rotateAngleX += -0.05F + -0.05F * MathHelper.cos(ageInTicks * 0.3F);
       }
     }
-
-
   }
 }

@@ -22,9 +22,11 @@ package top.theillusivec4.combustivefishing.client.renderer;
 import com.mojang.blaze3d.platform.GlStateManager;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.CodModel;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
@@ -52,7 +54,9 @@ public class CombustiveCodRender extends
     super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
     float f = 4.3F * MathHelper.sin(0.6F * ageInTicks);
     GlStateManager.rotatef(f, 0.0F, 1.0F, 0.0F);
-    if (!entityLiving.isInWater()) {
+    BlockState state = entityLiving.getBlockState();
+
+    if (!state.getFluidState().isTagged(FluidTags.LAVA)) {
       GlStateManager.translatef(0.1F, 0.1F, -0.1F);
       GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
     }
