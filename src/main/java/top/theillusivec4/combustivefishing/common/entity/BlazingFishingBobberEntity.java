@@ -61,6 +61,8 @@ import net.minecraft.world.storage.loot.LootParameterSets;
 import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTables;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
@@ -84,6 +86,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
   private float fishApproachAngle;
   private PlayerEntity angler;
 
+  @OnlyIn(Dist.CLIENT)
   public BlazingFishingBobberEntity(World worldIn) {
     super(worldIn, Minecraft.getInstance().player, 0, 0, 0);
     this.luck = 0;
