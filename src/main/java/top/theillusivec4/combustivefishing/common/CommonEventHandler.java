@@ -30,7 +30,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
-import top.theillusivec4.combustivefishing.common.init.CombustiveFishingItems;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingItems;
 
 public class CommonEventHandler {
 

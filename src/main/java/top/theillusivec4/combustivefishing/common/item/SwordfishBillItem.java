@@ -22,11 +22,17 @@ package top.theillusivec4.combustivefishing.common.item;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingItems;
 
 public class SwordfishBillItem extends HotFishItem {
 
     public SwordfishBillItem() {
-        super(FishType.SEARING_SWORDFISH, new Item.Properties().group(ItemGroup.MISC));
+        super(new Item.Properties().group(ItemGroup.MISC));
         this.setRegistryName(CombustiveFishing.MODID, "swordfish_bill");
+    }
+
+    @Override
+    protected Item getCooledItem() {
+        return CombustiveFishingItems.COOLED_BILL;
     }
 }

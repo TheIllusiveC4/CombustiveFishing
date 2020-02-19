@@ -28,7 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.crafting.Ingredient;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
-import top.theillusivec4.combustivefishing.common.init.CombustiveFishingItems;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingItems;
 import top.theillusivec4.combustivefishing.common.registry.RegistryReference;
 
 public class SearingSwordItem extends SwordItem {

@@ -17,7 +17,7 @@
  * License along with Combustive Fishing.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.combustivefishing.common.init;
+package top.theillusivec4.combustivefishing.common.registry;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;

@@ -37,7 +37,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.common.entity.AbstractLavaFishEntity;
-import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.item.BlazingFishingRodItem;
 import top.theillusivec4.combustivefishing.common.item.BoneFishItem;
 import top.theillusivec4.combustivefishing.common.item.CombustiveCodItem;

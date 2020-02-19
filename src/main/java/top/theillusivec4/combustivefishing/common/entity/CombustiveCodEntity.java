@@ -26,9 +26,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
-import top.theillusivec4.combustivefishing.common.init.CombustiveFishingEntities;
-import top.theillusivec4.combustivefishing.common.init.CombustiveFishingItems;
-import top.theillusivec4.combustivefishing.common.init.CombustiveFishingLoot;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingEntities;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingItems;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingLoot;
 
 public class CombustiveCodEntity extends AbstractLavaGroupFishEntity {
 

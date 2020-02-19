@@ -19,7 +19,6 @@
 
 package top.theillusivec4.combustivefishing.common.item;
 
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
@@ -31,15 +30,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import top.theillusivec4.combustivefishing.common.init.CombustiveFishingItems;
 
-public class HotFishItem extends Item {
+public abstract class HotFishItem extends Item {
 
-  private final FishType fishType;
-
-  public HotFishItem(FishType fishType, Item.Properties properties) {
+  public HotFishItem(Item.Properties properties) {
     super(properties);
-    this.fishType = fishType;
   }
 
   @Override
@@ -56,7 +51,7 @@ public class HotFishItem extends Item {
       if (!world.isRemote) {
 
         world.addEntity(new ItemEntity(world, posX, posY, posZ,
-            new ItemStack(fishType.getCooledItem(), entity.getItem().getCount())));
+            new ItemStack(this.getCooledItem(), entity.getItem().getCount())));
         entity.remove();
       }
       world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH,
@@ -68,7 +63,7 @@ public class HotFishItem extends Item {
 
       if (level > 0) {
         world.addEntity(new ItemEntity(world, posX, posY, posZ,
-            new ItemStack(fishType.getCooledItem(), entity.getItem().getCount())));
+            new ItemStack(this.getCooledItem(), entity.getItem().getCount())));
         entity.remove();
       }
       world.setBlockState(blockpos, state.with(CauldronBlock.LEVEL, MathHelper.clamp(level, 0, 3)),
@@ -79,19 +74,5 @@ public class HotFishItem extends Item {
     return false;
   }
 
-  public enum FishType {
-    COMBUSTIVE_COD(CombustiveFishingItems.COOLED_COD), SEARING_SWORDFISH(
-        CombustiveFishingItems.COOLED_BILL);
-
-    Item cooledItem;
-
-    FishType(Item cooledItem) {
-      this.cooledItem = cooledItem;
-    }
-
-    @Nullable
-    public Item getCooledItem() {
-      return cooledItem;
-    }
-  }
+  protected abstract Item getCooledItem();
 }

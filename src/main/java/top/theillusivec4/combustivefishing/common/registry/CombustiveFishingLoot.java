@@ -17,30 +17,19 @@
  * License along with Combustive Fishing.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.combustivefishing.common.init;
+package top.theillusivec4.combustivefishing.common.registry;
 
-import net.minecraft.item.Item;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.util.ResourceLocation;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
 
-@ObjectHolder(value = CombustiveFishing.MODID)
-public class CombustiveFishingItems {
+public class CombustiveFishingLoot {
 
-    @ObjectHolder("combustive_cod_bucket")
-    public static final Item COMBUSTIVE_COD_BUCKET = null;
+    public static final ResourceLocation NETHER_FISHING = create("gameplay/nether_fishing");
+    public static final ResourceLocation LAVA_FISHING = create("gameplay/lava_fishing");
+    public static final ResourceLocation COMBUSTIVE_COD = create("entity/combustive_cod");
+    public static final ResourceLocation SEARING_SWORDFISH = create("entity/searing_swordfish");
 
-    @ObjectHolder("combustive_cod")
-    public static final Item COMBUSTIVE_COD = null;
-
-    @ObjectHolder("cooled_cod")
-    public static final Item COOLED_COD = null;
-
-    @ObjectHolder("bone_fish")
-    public static final Item BONE_FISH = null;
-
-    @ObjectHolder("swordfish_bill")
-    public static final Item SWORDFISH_BILL = null;
-
-    @ObjectHolder("cooled_bill")
-    public static final Item COOLED_BILL = null;
+    private static ResourceLocation create(String path) {
+        return new ResourceLocation(CombustiveFishing.MODID, path);
+    }
 }

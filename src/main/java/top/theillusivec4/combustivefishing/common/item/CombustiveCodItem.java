@@ -33,12 +33,13 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.common.entity.ThrownCombustiveCodEntity;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingItems;
 import top.theillusivec4.combustivefishing.common.registry.RegistryReference;
 
 public class CombustiveCodItem extends HotFishItem {
 
   public CombustiveCodItem() {
-    super(FishType.COMBUSTIVE_COD, new Item.Properties().maxStackSize(16).group(ItemGroup.MISC));
+    super(new Item.Properties().maxStackSize(16).group(ItemGroup.MISC));
     this.setRegistryName(CombustiveFishing.MODID, RegistryReference.COMBUSTIVE_COD);
   }
 
@@ -63,5 +64,10 @@ public class CombustiveCodItem extends HotFishItem {
     }
     playerIn.addStat(Stats.ITEM_USED.get(this));
     return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+  }
+
+  @Override
+  protected Item getCooledItem() {
+    return CombustiveFishingItems.COOLED_COD;
   }
 }
