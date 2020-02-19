@@ -66,9 +66,6 @@ public abstract class HotFishItem extends Item {
             new ItemStack(this.getCooledItem(), entity.getItem().getCount())));
         entity.remove();
       }
-      world.setBlockState(blockpos, state.with(CauldronBlock.LEVEL, MathHelper.clamp(level, 0, 3)),
-          2);
-      world.updateComparatorOutputLevel(blockpos, state.getBlock());
       return true;
     }
     return false;
