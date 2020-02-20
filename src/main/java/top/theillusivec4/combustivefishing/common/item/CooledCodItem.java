@@ -29,7 +29,7 @@ public class CooledCodItem extends Item {
 
   public CooledCodItem() {
     super(new Item.Properties().group(ItemGroup.FOOD)
-        .food(new Food.Builder().hunger(7).saturation(0.8F).build()));
+        .food(new Food.Builder().hunger(6).saturation(1.2F).build()));
     this.setRegistryName(CombustiveFishing.MODID, RegistryReference.COOLED_COD);
   }
 }
