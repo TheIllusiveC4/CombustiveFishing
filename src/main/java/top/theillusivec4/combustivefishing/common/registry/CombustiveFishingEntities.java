@@ -19,14 +19,17 @@
 
 package top.theillusivec4.combustivefishing.common.registry;
 
+import com.mojang.authlib.GameProfile;
+import java.util.UUID;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.FakePlayer;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.common.entity.BlazingFishingBobberEntity;
 import top.theillusivec4.combustivefishing.common.entity.CombustiveCodEntity;
 import top.theillusivec4.combustivefishing.common.entity.SearingSwordfishEntity;
 import top.theillusivec4.combustivefishing.common.entity.ThrownCombustiveCodEntity;
-import top.theillusivec4.combustivefishing.common.registry.RegistryReference;
 
 public class CombustiveFishingEntities {
 
@@ -57,11 +60,17 @@ public class CombustiveFishingEntities {
                 spawnEntity.getPosY(), spawnEntity.getPosZ()))).build(RegistryReference.THROWN_COD);
     THROWN_COMBUSTIVE_COD.setRegistryName(CombustiveFishing.MODID, RegistryReference.THROWN_COD);
 
-    BLAZING_BOBBER = EntityType.Builder.<BlazingFishingBobberEntity>create(
-        (entityType, world) -> new BlazingFishingBobberEntity(world), EntityClassification.MISC)
-        .size(0.25F, 0.25F).disableSerialization().disableSummoning().setTrackingRange(64)
-        .immuneToFire().setUpdateInterval(5).setShouldReceiveVelocityUpdates(true)
-        .build(RegistryReference.BLAZING_BOBBER);
+    BLAZING_BOBBER = EntityType.Builder.<BlazingFishingBobberEntity>create((entityType, world) -> {
+      if (world.isRemote()) {
+        return new BlazingFishingBobberEntity(world);
+      } else {
+        return new BlazingFishingBobberEntity(
+            new FakePlayer((ServerWorld) world, new GameProfile(UUID.randomUUID(), "")), world, 0,
+            0);
+      }
+    }, EntityClassification.MISC).size(0.25F, 0.25F).disableSerialization().disableSummoning()
+        .setTrackingRange(64).immuneToFire().setUpdateInterval(5)
+        .setShouldReceiveVelocityUpdates(true).build(RegistryReference.BLAZING_BOBBER);
     BLAZING_BOBBER.setRegistryName(CombustiveFishing.MODID, RegistryReference.BLAZING_BOBBER);
   }
 }
