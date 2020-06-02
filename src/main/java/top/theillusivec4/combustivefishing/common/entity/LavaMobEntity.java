@@ -63,11 +63,11 @@ public abstract class LavaMobEntity extends WaterMobEntity {
         LootTable loottable = server.getLootTableManager()
             .getLootTableFromLocation(resourcelocation);
         LootContext.Builder lootcontext = this.getLootContextBuilder(wasRecentlyHit, source);
-        loottable.generate(lootcontext.build(LootParameterSets.ENTITY), (itemStack) -> {
+        loottable.generate(lootcontext.build(LootParameterSets.ENTITY)).forEach(itemstack -> {
           if (wasRecentlyHit) {
-            ItemHandlerHelper.giveItemToPlayer(this.attackingPlayer, itemStack);
+            ItemHandlerHelper.giveItemToPlayer(this.attackingPlayer, itemstack);
           } else {
-            this.entityDropItem(itemStack);
+            this.entityDropItem(itemstack);
           }
         });
       }
@@ -101,8 +101,8 @@ public abstract class LavaMobEntity extends WaterMobEntity {
     if (stack.isEmpty()) {
       return null;
     } else {
-      ItemEntity itemEntity = new ItemEntity(this.world, this.posX, this.posY + (double) offsetY,
-          this.posZ, stack);
+      ItemEntity itemEntity = new ItemEntity(this.world, this.getPosX(),
+          this.getPosY() + (double) offsetY, this.getPosZ(), stack);
       itemEntity.setDefaultPickupDelay();
       itemEntity.setInvulnerable(true);
       Collection<ItemEntity> captureDrops = captureDrops();

@@ -26,6 +26,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.ExperienceOrbEntity;
@@ -65,9 +66,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
+import top.theillusivec4.combustivefishing.common.item.BlazingFishingRodItem;
 import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingLoot;
-import top.theillusivec4.combustivefishing.common.item.BlazingFishingRodItem;
 
 public class BlazingFishingBobberEntity extends FishingBobberEntity implements
     IEntityAdditionalSpawnData {
@@ -120,8 +121,11 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
 
   @Override
   public void readSpawnData(PacketBuffer additionalData) {
-    this.angler = (PlayerEntity) Minecraft.getInstance().world
-        .getEntityByID(additionalData.readInt());
+    ClientWorld clientWorld = Minecraft.getInstance().world;
+
+    if (clientWorld != null) {
+      this.angler = (PlayerEntity) clientWorld.getEntityByID(additionalData.readInt());
+    }
   }
 
   @Override
@@ -202,11 +206,9 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
               this.caughtEntity = null;
               this.currentState = BlazingFishingBobberEntity.State.FLYING;
             } else {
-              this.posX = this.caughtEntity.posX;
               double d2 = this.caughtEntity.getHeight();
-              this.posY = this.caughtEntity.getBoundingBox().minY + d2 * 0.8D;
-              this.posZ = this.caughtEntity.posZ;
-              this.setPosition(this.posX, this.posY, this.posZ);
+              this.setPosition(this.caughtEntity.getPosX(),
+                  this.caughtEntity.getBoundingBox().minY + d2 * 0.8D, this.caughtEntity.getPosZ());
             }
           }
           return;
@@ -214,7 +216,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
 
         if (this.currentState == BlazingFishingBobberEntity.State.BOBBING) {
           Vec3d vec3d = this.getMotion();
-          double d0 = this.posY + vec3d.y - (double) blockpos.getY() - (double) f;
+          double d0 = this.getPosY() + vec3d.y - (double) blockpos.getY() - (double) f;
 
           if (Math.abs(d0) < 0.01D) {
             d0 += Math.signum(d0) * 0.1D;
@@ -235,7 +237,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
       this.updateRotation();
       double d1 = 0.92D;
       this.setMotion(this.getMotion().scale(d1));
-      this.setPosition(this.posX, this.posY, this.posZ);
+      this.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
     }
   }
 
@@ -259,7 +261,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
     this.rotationYaw = (float) (MathHelper.atan2(vec3d.x, vec3d.z) * (double) (180F
         / (float) Math.PI));
 
-    for (this.rotationPitch = (float) (MathHelper.atan2(vec3d.y, (double) f) * (double) (180F
+    for (this.rotationPitch = (float) (MathHelper.atan2(vec3d.y, f) * (double) (180F
         / (float) Math.PI)); this.rotationPitch - this.prevRotationPitch < -180.0F;
         this.prevRotationPitch -= 360.0F) {
       ;
@@ -311,7 +313,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
       i--;
     }
 
-    if (this.rand.nextFloat() < 0.25F && !this.world.isSkyLightMax(blockpos)) {
+    if (this.rand.nextFloat() < 0.25F && !this.world.canSeeSky(blockpos)) {
       i++;
     }
 
@@ -335,9 +337,9 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
         float f = this.fishApproachAngle * ((float) Math.PI / 180F);
         float f1 = MathHelper.sin(f);
         float f2 = MathHelper.cos(f);
-        double d0 = this.posX + (double) (f1 * (float) this.ticksCatchableDelay * 0.1F);
+        double d0 = this.getPosX() + (double) (f1 * (float) this.ticksCatchableDelay * 0.1F);
         double d1 = (float) MathHelper.floor(this.getBoundingBox().minY) + 1.0F;
-        double d2 = this.posZ + (double) (f2 * (float) this.ticksCatchableDelay * 0.1F);
+        double d2 = this.getPosZ() + (double) (f2 * (float) this.ticksCatchableDelay * 0.1F);
         BlockState state = worldserver.getBlockState(new BlockPos(d0, d1 - 1.0D, d2));
 
         if (state.getMaterial() == Material.WATER) {
@@ -368,24 +370,25 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
       } else {
         double d3 = this.getBoundingBox().minY + 0.5D;
         double d1 = (float) MathHelper.floor(this.getBoundingBox().minY) + 1.0F;
-        BlockState state = worldserver.getBlockState(new BlockPos(this.posX, d1 - 1.0D, this.posZ));
+        BlockState state = worldserver
+            .getBlockState(new BlockPos(this.getPosX(), d1 - 1.0D, this.getPosZ()));
         Vec3d vec3d = this.getMotion();
 
         if (state.getMaterial() == Material.WATER) {
           this.setMotion(vec3d.x, -0.4F * MathHelper.nextFloat(this.rand, 0.6F, 1.0F), vec3d.z);
           this.playSound(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH, 0.25F,
               1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
-          worldserver.spawnParticle(ParticleTypes.BUBBLE, this.posX, d3, this.posZ,
+          worldserver.spawnParticle(ParticleTypes.BUBBLE, this.getPosX(), d3, this.getPosZ(),
               (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.2F);
-          worldserver.spawnParticle(ParticleTypes.FISHING, this.posX, d3, this.posZ,
+          worldserver.spawnParticle(ParticleTypes.FISHING, this.getPosX(), d3, this.getPosZ(),
               (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.2F);
         } else if (state.getMaterial() == Material.LAVA) {
           this.setMotion(vec3d.x, -0.4F * MathHelper.nextFloat(this.rand, 0.6F, 1.0F), vec3d.z);
           this.playSound(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH, 0.25F,
               0.4F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F);
-          worldserver.spawnParticle(ParticleTypes.FLAME, this.posX, d3, this.posZ,
+          worldserver.spawnParticle(ParticleTypes.FLAME, this.getPosX(), d3, this.getPosZ(),
               (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.2F);
-          worldserver.spawnParticle(ParticleTypes.SMOKE, this.posX, d3, this.posZ,
+          worldserver.spawnParticle(ParticleTypes.SMOKE, this.getPosX(), d3, this.getPosZ(),
               (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.2F);
         }
         this.ticksCatchable = MathHelper.nextInt(this.rand, 20, 40);
@@ -404,9 +407,9 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
       if (this.rand.nextFloat() < f5) {
         float f6 = MathHelper.nextFloat(this.rand, 0.0F, 360.0F) * ((float) Math.PI / 180F);
         float f7 = MathHelper.nextFloat(this.rand, 25.0F, 60.0F);
-        double d4 = this.posX + (double) (MathHelper.sin(f6) * f7 * 0.1F);
+        double d4 = this.getPosX() + (double) (MathHelper.sin(f6) * f7 * 0.1F);
         double d5 = (float) MathHelper.floor(this.getBoundingBox().minY) + 1.0F;
-        double d6 = this.posZ + (double) (MathHelper.cos(f6) * f7 * 0.1F);
+        double d6 = this.getPosZ() + (double) (MathHelper.cos(f6) * f7 * 0.1F);
         BlockState state = worldserver
             .getBlockState(new BlockPos((int) d4, (int) d5 - 1, (int) d6));
 
@@ -445,16 +448,15 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
         this.world.setEntityState(this, (byte) 31);
         i = this.caughtEntity instanceof ItemEntity ? 3 : 5;
       } else if (this.ticksCatchable > 0) {
-        BlockPos pos = new BlockPos(this);
         LootContext.Builder lootcontext$builder = (new LootContext.Builder(
             (ServerWorld) this.world)).withParameter(LootParameters.POSITION, new BlockPos(this))
             .withParameter(LootParameters.TOOL, itemStack).withRandom(this.rand)
             .withLuck((float) this.luck + this.angler.getLuck());
-        ;
         lootcontext$builder.withParameter(LootParameters.KILLER_ENTITY, this.angler)
             .withParameter(LootParameters.THIS_ENTITY, this);
         double d = (float) MathHelper.floor(this.getBoundingBox().minY) + 1.0F;
-        BlockState state = this.world.getBlockState(new BlockPos(this.posX, d - 1.0D, this.posZ));
+        BlockState state = this.world
+            .getBlockState(new BlockPos(this.getPosX(), d - 1.0D, this.getPosZ()));
         ResourceLocation loottable;
 
         if (state.getMaterial() == Material.LAVA) {
@@ -486,18 +488,19 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
               .trigger((ServerPlayerEntity) this.angler, itemStack, this, list);
 
           for (ItemStack itemstack : list) {
-            ItemEntity itementity = new ItemEntity(this.world, this.posX, this.posY + 2.0D,
-                this.posZ, itemstack);
-            double d0 = this.angler.posX - this.posX;
-            double d1 = this.angler.posY - this.posY;
-            double d2 = this.angler.posZ - this.posZ;
+            ItemEntity itementity = new ItemEntity(this.world, this.getPosX(),
+                this.getPosY() + 2.0D, this.getPosZ(), itemstack);
+            double d0 = this.angler.getPosX() - this.getPosX();
+            double d1 = this.angler.getPosY() - this.getPosY();
+            double d2 = this.angler.getPosZ() - this.getPosZ();
             double d3 = MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
             double d4 = 0.1D;
-            itementity.setMotion(d0 * d4,
-                d1 * d4 + Math.sqrt(d3) * 0.08D, d2 * d4);
+            itementity.setMotion(d0 * d4, d1 * d4 + Math.sqrt(d3) * 0.08D, d2 * d4);
             this.world.addEntity(itementity);
-            this.angler.world.addEntity(new ExperienceOrbEntity(this.angler.world, this.angler.posX,
-                this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(6) + 1));
+            this.angler.world.addEntity(
+                new ExperienceOrbEntity(this.angler.world, this.angler.getPosX(),
+                    this.angler.getPosY() + 0.5D, this.angler.getPosZ() + 0.5D,
+                    this.rand.nextInt(6) + 1));
 
             if (itemstack.getItem().isIn(ItemTags.FISHES)) {
               this.angler.addStat(Stats.FISH_CAUGHT, 1);
@@ -518,6 +521,6 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity implements
   }
 
   enum State {
-    FLYING, HOOKED_IN_ENTITY, BOBBING;
+    FLYING, HOOKED_IN_ENTITY, BOBBING
   }
 }

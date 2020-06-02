@@ -19,9 +19,7 @@
 
 package top.theillusivec4.combustivefishing.client.renderer;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -29,31 +27,19 @@ import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.client.model.SwordfishModel;
 import top.theillusivec4.combustivefishing.common.entity.SearingSwordfishEntity;
 
-public class SwordfishRender extends
+public class SwordfishRenderer extends
     MobRenderer<SearingSwordfishEntity, SwordfishModel<SearingSwordfishEntity>> {
 
   private static final ResourceLocation SWORDFISH_LOCATION = new ResourceLocation(
       CombustiveFishing.MODID, "textures/entity/swordfish.png");
 
-  public SwordfishRender(EntityRendererManager renderManagerIn) {
+  public SwordfishRenderer(EntityRendererManager renderManagerIn) {
     super(renderManagerIn, new SwordfishModel<>(), 0.7F);
   }
 
-  @Nullable
+  @Nonnull
   @Override
-  protected ResourceLocation getEntityTexture(@Nonnull SearingSwordfishEntity entity) {
+  public ResourceLocation getEntityTexture(@Nonnull SearingSwordfishEntity entity) {
     return SWORDFISH_LOCATION;
-  }
-
-  @Override
-  protected void preRenderCallback(@Nonnull SearingSwordfishEntity entitylivingbaseIn,
-      float partialTickTime) {
-    GlStateManager.scalef(1.0F, 1.0F, 1.0F);
-  }
-
-  @Override
-  protected void applyRotations(SearingSwordfishEntity entityLiving, float ageInTicks,
-      float rotationYaw, float partialTicks) {
-    super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
   }
 }

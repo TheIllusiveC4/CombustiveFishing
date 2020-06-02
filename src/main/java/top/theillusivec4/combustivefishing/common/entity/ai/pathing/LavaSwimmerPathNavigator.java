@@ -27,8 +27,6 @@ import net.minecraft.world.World;
 
 public class LavaSwimmerPathNavigator extends SwimmerPathNavigator {
 
-    private boolean isSwordfish;
-
     public LavaSwimmerPathNavigator(MobEntity mobEntity, World worldIn) {
         super(mobEntity, worldIn);
     }
@@ -36,8 +34,7 @@ public class LavaSwimmerPathNavigator extends SwimmerPathNavigator {
     @Nonnull
     @Override
     protected PathFinder getPathFinder(int param1) {
-        this.isSwordfish = false;
-        this.nodeProcessor = new LavaSwimNodeProcessor(isSwordfish);
+        this.nodeProcessor = new LavaSwimNodeProcessor();
         return new PathFinder(this.nodeProcessor, param1);
     }
 }

@@ -242,9 +242,9 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
       }
 
       if (this.action == MovementController.Action.MOVE_TO && !this.fish.getNavigator().noPath()) {
-        double d0 = this.posX - this.fish.posX;
-        double d1 = this.posY - this.fish.posY;
-        double d2 = this.posZ - this.fish.posZ;
+        double d0 = this.posX - this.fish.getPosX();
+        double d1 = this.posY - this.fish.getPosY();
+        double d2 = this.posZ - this.fish.getPosZ();
         double d3 = MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
         d1 = d1 / d3;
         float f = (float) (MathHelper.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;

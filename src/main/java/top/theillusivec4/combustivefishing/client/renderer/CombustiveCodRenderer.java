@@ -19,10 +19,10 @@
 
 package top.theillusivec4.combustivefishing.client.renderer;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.CodModel;
@@ -32,34 +32,33 @@ import net.minecraft.util.math.MathHelper;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.common.entity.CombustiveCodEntity;
 
-public class CombustiveCodRender extends
+public class CombustiveCodRenderer extends
     MobRenderer<CombustiveCodEntity, CodModel<CombustiveCodEntity>> {
 
   private static final ResourceLocation COD_LOCATION = new ResourceLocation(CombustiveFishing.MODID,
       "textures/entity/combustive_cod.png");
 
-  public CombustiveCodRender(EntityRendererManager renderManager) {
+  public CombustiveCodRenderer(EntityRendererManager renderManager) {
     super(renderManager, new CodModel<>(), 0.3F);
   }
 
-  @Nullable
+  @Nonnull
   @Override
-  protected ResourceLocation getEntityTexture(@Nonnull CombustiveCodEntity entity) {
+  public ResourceLocation getEntityTexture(@Nonnull CombustiveCodEntity entity) {
     return COD_LOCATION;
   }
 
   @Override
-  protected void applyRotations(CombustiveCodEntity entityLiving, float ageInTicks,
-      float rotationYaw, float partialTicks) {
-    super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
+  protected void applyRotations(CombustiveCodEntity entityLiving,
+      @Nonnull MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
+    super.applyRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw, partialTicks);
     float f = 4.3F * MathHelper.sin(0.6F * ageInTicks);
-    GlStateManager.rotatef(f, 0.0F, 1.0F, 0.0F);
     BlockState state = entityLiving.getBlockState();
+    matrixStackIn.rotate(Vector3f.YP.rotationDegrees(f));
 
     if (!state.getFluidState().isTagged(FluidTags.LAVA)) {
-      GlStateManager.translatef(0.1F, 0.1F, -0.1F);
-      GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
+      matrixStackIn.translate(0.1F, 0.1F, -0.1F);
+      matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(90.0F));
     }
-
   }
 }

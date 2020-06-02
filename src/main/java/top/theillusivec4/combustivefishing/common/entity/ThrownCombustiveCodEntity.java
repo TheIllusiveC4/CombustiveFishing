@@ -73,7 +73,9 @@ public class ThrownCombustiveCodEntity extends ProjectileItemEntity {
       IParticleData iparticledata = this.makeParticle();
 
       for (int i = 0; i < 8; ++i) {
-        this.world.addParticle(iparticledata, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+        this.world
+            .addParticle(iparticledata, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D,
+                0.0D);
       }
     }
 
@@ -90,7 +92,8 @@ public class ThrownCombustiveCodEntity extends ProjectileItemEntity {
     }
 
     if (!this.world.isRemote) {
-      this.world.createExplosion(null, this.posX, this.posY, this.posZ, 1, true, Mode.BREAK);
+      this.world.createExplosion(null, this.getPosX(), this.getPosY(), this.getPosZ(), 1, true,
+          Mode.BREAK);
       this.world.setEntityState(this, (byte) 3);
       this.remove();
     }

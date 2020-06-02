@@ -40,9 +40,9 @@ public abstract class HotFishItem extends Item {
   @Override
   public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
     World world = entity.world;
-    double posX = entity.posX;
-    double posY = entity.posY;
-    double posZ = entity.posZ;
+    double posX = entity.getPosX();
+    double posY = entity.getPosY();
+    double posZ = entity.getPosZ();
     BlockPos blockpos = entity.getPosition();
     BlockState state = world.getBlockState(blockpos);
 

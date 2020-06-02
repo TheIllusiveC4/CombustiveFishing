@@ -33,11 +33,8 @@ import net.minecraft.world.IBlockReader;
 
 public class LavaSwimNodeProcessor extends SwimNodeProcessor {
 
-  private boolean isSwordfish;
-
-  public LavaSwimNodeProcessor(boolean isSwordfish) {
-    super(isSwordfish);
-    this.isSwordfish = isSwordfish;
+  public LavaSwimNodeProcessor() {
+    super(false);
   }
 
   @Override
@@ -47,6 +44,7 @@ public class LavaSwimNodeProcessor extends SwimNodeProcessor {
     for (Direction direction : Direction.values()) {
       PathPoint pathpoint = this.getLavaNode(p_222859_2_.x + direction.getXOffset(),
           p_222859_2_.y + direction.getYOffset(), p_222859_2_.z + direction.getZOffset());
+
       if (pathpoint != null && !pathpoint.visited) {
         p_222859_1_[i++] = pathpoint;
       }
@@ -57,8 +55,7 @@ public class LavaSwimNodeProcessor extends SwimNodeProcessor {
   @Nullable
   private PathPoint getLavaNode(int p_186328_1_, int p_186328_2_, int p_186328_3_) {
     PathNodeType pathnodetype = this.isFree(p_186328_1_, p_186328_2_, p_186328_3_);
-    return (!this.isSwordfish || pathnodetype != PathNodeType.BREACH)
-        && pathnodetype != PathNodeType.LAVA ? null
+    return pathnodetype != PathNodeType.LAVA ? null
         : this.openPoint(p_186328_1_, p_186328_2_, p_186328_3_);
   }
 
@@ -68,6 +65,7 @@ public class LavaSwimNodeProcessor extends SwimNodeProcessor {
     BlockPos blockpos = new BlockPos(x, y, z);
     IFluidState ifluidstate = blockaccessIn.getFluidState(blockpos);
     BlockState blockstate = blockaccessIn.getBlockState(blockpos);
+
     if (ifluidstate.isEmpty() && blockstate.isAir(blockaccessIn, blockpos)) {
       return PathNodeType.BREACH;
     } else {
@@ -76,15 +74,18 @@ public class LavaSwimNodeProcessor extends SwimNodeProcessor {
   }
 
   private PathNodeType isFree(int p_186327_1_, int p_186327_2_, int p_186327_3_) {
-    BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+    BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable();
 
     for (int i = p_186327_1_; i < p_186327_1_ + this.entitySizeX; ++i) {
+
       for (int j = p_186327_2_; j < p_186327_2_ + this.entitySizeY; ++j) {
+
         for (int k = p_186327_3_; k < p_186327_3_ + this.entitySizeZ; ++k) {
           IFluidState ifluidstate = this.blockaccess
               .getFluidState(blockpos$mutableblockpos.setPos(i, j, k));
           BlockState blockstate = this.blockaccess
               .getBlockState(blockpos$mutableblockpos.setPos(i, j, k));
+
           if (ifluidstate.isEmpty() && blockstate.isAir(blockaccess, blockpos$mutableblockpos)) {
             return PathNodeType.BREACH;
           }

@@ -52,16 +52,14 @@ public class BlazingFishingRodItem extends FishingRodItem {
     if (playerIn.fishingBobber != null) {
       if (!worldIn.isRemote) {
         int i = playerIn.fishingBobber.handleHookRetraction(itemstack);
-        itemstack.damageItem(i, playerIn, (damager) -> {
-          damager.sendBreakAnimation(handIn);
-        });
+        itemstack.damageItem(i, playerIn, (damager) -> damager.sendBreakAnimation(handIn));
       }
       playerIn.swingArm(handIn);
-      worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ,
+      worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(),
           SoundEvents.ENTITY_FISHING_BOBBER_RETRIEVE, SoundCategory.NEUTRAL, 1.0F,
           0.4F / (random.nextFloat() * 0.4F + 0.8F));
     } else {
-      worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ,
+      worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(),
           SoundEvents.ENTITY_FISHING_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F,
           0.4F / (random.nextFloat() * 0.4F + 0.8F));
 

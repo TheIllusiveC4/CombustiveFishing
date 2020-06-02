@@ -125,10 +125,11 @@ public class BoneFishItem extends Item {
       double d1 = rand.nextGaussian() * 0.02D;
       double d2 = rand.nextGaussian() * 0.02D;
       entity.world.addParticle(iparticledata,
-          entity.posX + (double) (rand.nextFloat() * entity.getWidth() * 2.0F) - (double) entity
-              .getWidth(), entity.posY + 0.5D + (double) (rand.nextFloat() * entity.getHeight()),
-          entity.posZ + (double) (rand.nextFloat() * entity.getWidth() * 2.0F) - (double) entity
-              .getWidth(), d0, d1, d2);
+          entity.getPosX() + (double) (rand.nextFloat() * entity.getWidth() * 2.0F)
+              - (double) entity.getWidth(),
+          entity.getPosY() + 0.5D + (double) (rand.nextFloat() * entity.getHeight()),
+          entity.getPosZ() + (double) (rand.nextFloat() * entity.getWidth() * 2.0F)
+              - (double) entity.getWidth(), d0, d1, d2);
     }
   }
 }
