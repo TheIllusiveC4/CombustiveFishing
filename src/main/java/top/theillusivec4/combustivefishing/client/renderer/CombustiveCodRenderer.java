@@ -22,13 +22,13 @@ package top.theillusivec4.combustivefishing.client.renderer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import javax.annotation.Nonnull;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.CodModel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3f;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.common.entity.CombustiveCodEntity;
 

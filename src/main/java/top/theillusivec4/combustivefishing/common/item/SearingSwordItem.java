@@ -72,7 +72,7 @@ public class SearingSwordItem extends SwordItem {
   @Override
   public boolean hitEntity(ItemStack stack, LivingEntity target, @Nonnull LivingEntity attacker) {
 
-    if (!target.isImmuneToFire()) {
+    if (!target.getType().isImmuneToFire()) {
       target.setFire(10);
     }
     return super.hitEntity(stack, target, attacker);

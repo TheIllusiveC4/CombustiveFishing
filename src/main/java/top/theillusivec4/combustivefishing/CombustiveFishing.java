@@ -19,6 +19,7 @@
 
 package top.theillusivec4.combustivefishing;
 
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -29,6 +30,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.combustivefishing.client.CombustiveFishingRenderer;
 import top.theillusivec4.combustivefishing.common.CommonEventHandler;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingEntities;
 
 @Mod(CombustiveFishing.MODID)
 public class CombustiveFishing {

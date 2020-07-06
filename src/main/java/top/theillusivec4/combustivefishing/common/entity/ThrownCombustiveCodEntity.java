@@ -86,9 +86,8 @@ public class ThrownCombustiveCodEntity extends ProjectileItemEntity {
 
     if (result.getType() == RayTraceResult.Type.ENTITY) {
       Entity entity = ((EntityRayTraceResult) result).getEntity();
-      entity
-          .attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()).setFireDamage(),
-              1.0F);
+      entity.attackEntityFrom(
+          DamageSource.causeThrownDamage(this, this.func_234616_v_()).setFireDamage(), 1.0F);
     }
 
     if (!this.world.isRemote) {

@@ -22,6 +22,7 @@ package top.theillusivec4.combustivefishing.common.item;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
+import javax.annotation.Nonnull;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -33,6 +34,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -49,8 +51,9 @@ public class BoneFishItem extends Item {
     this.setRegistryName(CombustiveFishing.MODID, RegistryReference.BONE_FISH);
   }
 
+  @Nonnull
   @Override
-  public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn,
+  public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn,
       LivingEntity target, Hand hand) {
 
     if (target instanceof OcelotEntity) {
@@ -81,11 +84,11 @@ public class BoneFishItem extends Item {
           }
         }
       }
-      return true;
+      return ActionResultType.SUCCESS;
     } else if (target instanceof WolfEntity && !((WolfEntity) target).isTamed()) {
       WolfEntity wolf = (WolfEntity) target;
 
-      if (!wolf.isAngry()) {
+      if (!wolf.func_233678_J__()) {
 
         if (!playerIn.abilities.isCreativeMode) {
           stack.shrink(1);
@@ -97,9 +100,7 @@ public class BoneFishItem extends Item {
             wolf.setTamedBy(playerIn);
             wolf.getNavigator().clearPath();
             wolf.setAttackTarget(null);
-            wolf.setHealth(20.0F);
             playTameEffect(wolf, true);
-            wolf.getAISit().setSitting(true);
             wolf.world.setEntityState(wolf, (byte) 7);
           } else {
             playTameEffect(wolf, false);
@@ -107,9 +108,9 @@ public class BoneFishItem extends Item {
           }
         }
       }
-      return true;
+      return ActionResultType.SUCCESS;
     }
-    return false;
+    return ActionResultType.PASS;
   }
 
   private static void playTameEffect(AnimalEntity entity, boolean play) {

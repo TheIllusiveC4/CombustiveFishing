@@ -25,10 +25,12 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
@@ -43,13 +45,14 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import top.theillusivec4.combustivefishing.common.entity.ai.pathing.LavaSwimmerPathNavigator;
@@ -69,10 +72,8 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
     return sizeIn.height * 0.65F;
   }
 
-  @Override
-  protected void registerAttributes() {
-    super.registerAttributes();
-    this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3.0D);
+  public static AttributeModifierMap.MutableAttribute registerAttributes() {
+    return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233818_a_, 3.0D);
   }
 
   @Override
@@ -138,7 +139,7 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
   }
 
   @Override
-  public void travel(@Nonnull Vec3d moveVector) {
+  public void travel(@Nonnull Vector3d moveVector) {
 
     if (this.isServerWorld() && this.isInLava()) {
       this.moveRelative(0.01F, moveVector);
@@ -158,7 +159,8 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
   public void livingTick() {
 
     if (!this.isInLava() && this.onGround && this.collidedVertically) {
-      this.setMotion(this.getMotion().add((this.rand.nextFloat() * 2.0F - 1.0F) * 0.05F, 0.4F, (this.rand.nextFloat() * 2.0F - 1.0F) * 0.05F));
+      this.setMotion(this.getMotion().add((this.rand.nextFloat() * 2.0F - 1.0F) * 0.05F, 0.4F,
+          (this.rand.nextFloat() * 2.0F - 1.0F) * 0.05F));
       this.onGround = false;
       this.isAirBorne = true;
       this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getSoundPitch());
@@ -166,8 +168,9 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
     super.livingTick();
   }
 
+  @Nonnull
   @Override
-  protected boolean processInteract(PlayerEntity player, Hand hand) {
+  protected ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
     ItemStack itemstack = player.getHeldItem(hand);
 
     if (itemstack.getItem() == Items.LAVA_BUCKET && this.isAlive()) {
@@ -175,6 +178,7 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
       itemstack.shrink(1);
       ItemStack itemstack1 = this.getFishBucket();
       this.setBucketData(itemstack1);
+
       if (!this.world.isRemote) {
         CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayerEntity) player, itemstack1);
       }
@@ -186,9 +190,9 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
       }
 
       this.remove();
-      return true;
+      return ActionResultType.func_233537_a_(this.world.isRemote);
     } else {
-      return super.processInteract(player, hand);
+      return super.func_230254_b_(player, hand);
     }
   }
 
@@ -242,19 +246,23 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
       }
 
       if (this.action == MovementController.Action.MOVE_TO && !this.fish.getNavigator().noPath()) {
+        float f = (float) (this.speed * this.fish.func_233637_b_(Attributes.field_233821_d_));
+        this.fish.setAIMoveSpeed(MathHelper.lerp(0.125F, this.fish.getAIMoveSpeed(), f));
         double d0 = this.posX - this.fish.getPosX();
         double d1 = this.posY - this.fish.getPosY();
         double d2 = this.posZ - this.fish.getPosZ();
-        double d3 = MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
-        d1 = d1 / d3;
-        float f = (float) (MathHelper.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
-        this.fish.rotationYaw = this.limitAngle(this.fish.rotationYaw, f, 90.0F);
-        this.fish.renderYawOffset = this.fish.rotationYaw;
-        float f1 = (float) (this.speed * this.fish
-            .getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue());
-        this.fish.setAIMoveSpeed(MathHelper.lerp(0.125F, this.fish.getAIMoveSpeed(), f1));
-        this.fish.setMotion(
-            this.fish.getMotion().add(0.0D, (double) this.fish.getAIMoveSpeed() * d1 * 0.1D, 0.0D));
+
+        if (d1 != 0.0D) {
+          double d3 = MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+          this.fish.setMotion(this.fish.getMotion()
+              .add(0.0D, (double) this.fish.getAIMoveSpeed() * (d1 / d3) * 0.1D, 0.0D));
+        }
+
+        if (d0 != 0.0D || d2 != 0.0D) {
+          float f1 = (float) (MathHelper.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
+          this.fish.rotationYaw = this.limitAngle(this.fish.rotationYaw, f1, 90.0F);
+          this.fish.renderYawOffset = this.fish.rotationYaw;
+        }
       } else {
         this.fish.setAIMoveSpeed(0.0F);
       }

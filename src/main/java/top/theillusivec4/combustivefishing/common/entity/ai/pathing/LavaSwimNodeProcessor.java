@@ -22,7 +22,7 @@ package top.theillusivec4.combustivefishing.common.entity.ai.pathing;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.pathfinding.SwimNodeProcessor;
@@ -63,7 +63,7 @@ public class LavaSwimNodeProcessor extends SwimNodeProcessor {
   @Override
   public PathNodeType getPathNodeType(IBlockReader blockaccessIn, int x, int y, int z) {
     BlockPos blockpos = new BlockPos(x, y, z);
-    IFluidState ifluidstate = blockaccessIn.getFluidState(blockpos);
+    FluidState ifluidstate = blockaccessIn.getFluidState(blockpos);
     BlockState blockstate = blockaccessIn.getBlockState(blockpos);
 
     if (ifluidstate.isEmpty() && blockstate.isAir(blockaccessIn, blockpos)) {
@@ -81,7 +81,7 @@ public class LavaSwimNodeProcessor extends SwimNodeProcessor {
       for (int j = p_186327_2_; j < p_186327_2_ + this.entitySizeY; ++j) {
 
         for (int k = p_186327_3_; k < p_186327_3_ + this.entitySizeZ; ++k) {
-          IFluidState ifluidstate = this.blockaccess
+          FluidState ifluidstate = this.blockaccess
               .getFluidState(blockpos$mutableblockpos.setPos(i, j, k));
           BlockState blockstate = this.blockaccess
               .getBlockState(blockpos$mutableblockpos.setPos(i, j, k));

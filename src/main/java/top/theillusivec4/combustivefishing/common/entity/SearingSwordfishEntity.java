@@ -20,8 +20,12 @@
 package top.theillusivec4.combustivefishing.common.entity;
 
 import javax.annotation.Nonnull;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -37,9 +41,16 @@ public class SearingSwordfishEntity extends AbstractLavaFishEntity {
     super(CombustiveFishingEntities.SEARING_SWORDFISH, world);
   }
 
+  public static AttributeModifierMap.MutableAttribute registerAttribute() {
+    return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233818_a_, 10.0D)
+        .func_233815_a_(Attributes.field_233821_d_, 1.2F)
+        .func_233815_a_(Attributes.field_233823_f_, 3.0D);
+  }
+
+  @Nonnull
   @Override
-  protected boolean processInteract(PlayerEntity player, Hand hand) {
-    return false;
+  protected ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
+    return ActionResultType.PASS;
   }
 
   @Override

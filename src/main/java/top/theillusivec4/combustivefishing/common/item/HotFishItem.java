@@ -28,7 +28,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public abstract class HotFishItem extends Item {
@@ -43,7 +42,7 @@ public abstract class HotFishItem extends Item {
     double posX = entity.getPosX();
     double posY = entity.getPosY();
     double posZ = entity.getPosZ();
-    BlockPos blockpos = entity.getPosition();
+    BlockPos blockpos = new BlockPos(entity.getPositionVec());
     BlockState state = world.getBlockState(blockpos);
 
     if (entity.isInWater()) {
