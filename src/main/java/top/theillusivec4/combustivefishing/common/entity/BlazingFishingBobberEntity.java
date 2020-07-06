@@ -19,6 +19,7 @@
 
 package top.theillusivec4.combustivefishing.common.entity;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -36,6 +37,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
@@ -65,17 +67,22 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.network.NetworkHooks;
+import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.common.item.BlazingFishingRodItem;
 import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingLoot;
 
 public class BlazingFishingBobberEntity extends FishingBobberEntity {
 
+  private static final Field HAS_LEFT_OWNER = ObfuscationReflectionHelper
+      .findField(ProjectileEntity.class, "field_234611_d_");
   private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager
       .createKey(BlazingFishingBobberEntity.class, DataSerializers.VARINT);
   private static final DataParameter<Boolean> DATA_CATCHING = EntityDataManager
       .createKey(BlazingFishingBobberEntity.class, DataSerializers.BOOLEAN);
+
   private final Random random = new Random();
   private final int luck;
   private final int lureSpeed;
@@ -142,10 +149,40 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity {
     super.notifyDataManagerChange(key);
   }
 
+  private boolean func_234615_h_() {
+    Entity entity = this.func_234616_v_();
+
+    if (entity != null) {
+
+      for (Entity entity1 : this.world.getEntitiesInAABBexcluding(this,
+          this.getBoundingBox().expand(this.getMotion()).grow(1.0D),
+          (p_234613_0_) -> !p_234613_0_.isSpectator() && p_234613_0_.canBeCollidedWith())) {
+        if (entity1.getLowestRidingEntity() == entity.getLowestRidingEntity()) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   @Override
   public void tick() {
     this.random.setSeed(this.getUniqueID().getLeastSignificantBits() ^ this.world.getGameTime());
-    super.tick();
+
+    try {
+      boolean hasLeftOwner = HAS_LEFT_OWNER.getBoolean(this);
+
+      if (!hasLeftOwner) {
+        HAS_LEFT_OWNER.setBoolean(this, this.func_234615_h_());
+      }
+    } catch (IllegalAccessException e) {
+      CombustiveFishing.LOGGER.error(e.getStackTrace());
+    }
+
+    if (!this.world.isRemote) {
+      this.setFlag(6, this.isGlowing());
+    }
+    this.baseTick();
     PlayerEntity playerentity = this.func_234606_i_();
 
     if (playerentity == null) {
@@ -166,7 +203,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity {
       BlockPos blockpos = this.func_233580_cy_();
       FluidState fluidstate = this.world.getFluidState(blockpos);
 
-      if (fluidstate.isTagged(FluidTags.LAVA)) {
+      if (fluidstate.isTagged(FluidTags.LAVA) || fluidstate.isTagged(FluidTags.WATER)) {
         f = fluidstate.getActualHeight(this.world, blockpos);
       }
       boolean flag = f > 0.0F;
@@ -316,7 +353,6 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity {
 
   @Override
   protected void onEntityHit(@Nonnull EntityRayTraceResult p_213868_1_) {
-    super.onEntityHit(p_213868_1_);
 
     if (!this.world.isRemote) {
       this.caughtEntity = p_213868_1_.getEntity();
@@ -543,6 +579,17 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity {
       return event == null ? i : event.getRodDamage();
     } else {
       return 0;
+    }
+  }
+
+  @Override
+  protected void bringInHookedEntity() {
+    Entity entity = this.func_234616_v_();
+
+    if (entity != null) {
+      Vector3d vector3d = (new Vector3d(entity.getPosX() - this.getPosX(),
+          entity.getPosY() - this.getPosY(), entity.getPosZ() - this.getPosZ())).scale(0.1D);
+      this.caughtEntity.setMotion(this.caughtEntity.getMotion().add(vector3d));
     }
   }
 

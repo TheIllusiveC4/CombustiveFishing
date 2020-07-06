@@ -46,8 +46,6 @@ public class CombustiveFishingEntities {
         .size(0.5F, 0.3F).immuneToFire().setTrackingRange(80).setUpdateInterval(3).immuneToFire()
         .setShouldReceiveVelocityUpdates(true).build(RegistryReference.COMBUSTIVE_COD);
     COMBUSTIVE_COD.setRegistryName(CombustiveFishing.MODID, RegistryReference.COMBUSTIVE_COD);
-    GlobalEntityTypeAttributes
-        .put(COMBUSTIVE_COD, AbstractLavaFishEntity.registerAttributes().func_233813_a_());
 
     SEARING_SWORDFISH = EntityType.Builder.<SearingSwordfishEntity>create(
         (entityType, world) -> new SearingSwordfishEntity(world),
@@ -55,8 +53,6 @@ public class CombustiveFishingEntities {
         .setUpdateInterval(3).setShouldReceiveVelocityUpdates(true).immuneToFire()
         .build(RegistryReference.SEARING_SWORDFISH);
     SEARING_SWORDFISH.setRegistryName(CombustiveFishing.MODID, RegistryReference.SEARING_SWORDFISH);
-    GlobalEntityTypeAttributes
-        .put(SEARING_SWORDFISH, SearingSwordfishEntity.registerAttribute().func_233813_a_());
 
     THROWN_COMBUSTIVE_COD = EntityType.Builder.<ThrownCombustiveCodEntity>create(
         (entityType, world) -> new ThrownCombustiveCodEntity(world), EntityClassification.MISC)

@@ -25,11 +25,14 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.theillusivec4.combustivefishing.client.CombustiveFishingRenderer;
 import top.theillusivec4.combustivefishing.common.CommonEventHandler;
+import top.theillusivec4.combustivefishing.common.entity.AbstractLavaFishEntity;
+import top.theillusivec4.combustivefishing.common.entity.SearingSwordfishEntity;
 import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingEntities;
 
 @Mod(CombustiveFishing.MODID)
@@ -41,11 +44,19 @@ public class CombustiveFishing {
   public CombustiveFishing() {
     IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
     eventBus.addListener(this::setup);
+    eventBus.addListener(this::postSetup);
     eventBus.addListener(this::clientSetup);
   }
 
   private void setup(final FMLCommonSetupEvent evt) {
     MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
+  }
+
+  private void postSetup(final FMLLoadCompleteEvent evt) {
+    GlobalEntityTypeAttributes.put(CombustiveFishingEntities.COMBUSTIVE_COD,
+        AbstractLavaFishEntity.registerAttributes().func_233813_a_());
+    GlobalEntityTypeAttributes.put(CombustiveFishingEntities.SEARING_SWORDFISH,
+        SearingSwordfishEntity.registerAttribute().func_233813_a_());
   }
 
   private void clientSetup(final FMLClientSetupEvent evt) {
