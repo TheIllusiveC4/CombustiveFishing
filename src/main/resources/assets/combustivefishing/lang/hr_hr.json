@@ -1,0 +1,14 @@
+{
+  "item.combustivefishing.blazing_fishing_rod": "Bljeskavi štap za pecanje",
+  "item.combustivefishing.combustive_cod_bucket": "Kanta s zapaljivim bakalarom",
+  "item.combustivefishing.combustive_cod": "Zapaljivi bakalar",
+  "item.combustivefishing.combustive_cod_spawn_egg": "Jaje za stvaranje zapaljivog bakalara",
+  "item.combustivefishing.cooled_cod": "Ohlađeni bakalar",
+  "item.combustivefishing.bone_fish": "Koštana riba",
+  "item.combustivefishing.swordfish_bill": "Kljun izgarajuće sabljarke",
+  "item.combustivefishing.searing_sword": "Izgarajuća sablja",
+  "item.combustivefishing.searing_swordfish_spawn_egg": "Jaje za stvaranje izgarajuće sabljarke",
+  "item.combustivefishing.cooled_bill": "Ohlađeni kljun",
+  "entity.combustivefishing.combustive_cod": "Zapaljivi bakalar",
+  "entity.combustivefishing.searing_swordfish": "Izgarajuća sabljarka"
+}
