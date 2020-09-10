@@ -54,9 +54,9 @@ public class CombustiveFishing {
 
   private void postSetup(final FMLLoadCompleteEvent evt) {
     GlobalEntityTypeAttributes.put(CombustiveFishingEntities.COMBUSTIVE_COD,
-        AbstractLavaFishEntity.registerAttributes().func_233813_a_());
+        AbstractLavaFishEntity.registerAttributes().create());
     GlobalEntityTypeAttributes.put(CombustiveFishingEntities.SEARING_SWORDFISH,
-        SearingSwordfishEntity.registerAttribute().func_233813_a_());
+        SearingSwordfishEntity.registerAttribute().create());
   }
 
   private void clientSetup(final FMLClientSetupEvent evt) {

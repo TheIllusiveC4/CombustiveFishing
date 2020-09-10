@@ -31,4 +31,5 @@ public class RegistryReference {
   public static final String SEARING_SWORDFISH = "searing_swordfish";
   public static final String THROWN_COD = "thrown_combustive_cod";
   public static final String BLAZING_BOBBER = "blazing_bobber";
+  public static final String BLAZING_FISHING_ROD = "blazing_fishing_rod";
 }

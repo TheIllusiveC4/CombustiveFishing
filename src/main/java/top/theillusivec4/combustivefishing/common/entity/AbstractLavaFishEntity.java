@@ -73,7 +73,7 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
   }
 
   public static AttributeModifierMap.MutableAttribute registerAttributes() {
-    return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233818_a_, 3.0D);
+    return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 3.0D);
   }
 
   @Override
@@ -246,7 +246,7 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
       }
 
       if (this.action == MovementController.Action.MOVE_TO && !this.fish.getNavigator().noPath()) {
-        float f = (float) (this.speed * this.fish.func_233637_b_(Attributes.field_233821_d_));
+        float f = (float) (this.speed * this.fish.getAttributeValue(Attributes.MOVEMENT_SPEED));
         this.fish.setAIMoveSpeed(MathHelper.lerp(0.125F, this.fish.getAIMoveSpeed(), f));
         double d0 = this.posX - this.fish.getPosX();
         double d1 = this.posY - this.fish.getPosY();

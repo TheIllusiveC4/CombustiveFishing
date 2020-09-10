@@ -35,12 +35,13 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
 import top.theillusivec4.combustivefishing.common.entity.BlazingFishingBobberEntity;
+import top.theillusivec4.combustivefishing.common.registry.RegistryReference;
 
 public class BlazingFishingRodItem extends FishingRodItem {
 
   public BlazingFishingRodItem() {
     super(new Item.Properties().defaultMaxDamage(128).group(ItemGroup.TOOLS));
-    this.setRegistryName(CombustiveFishing.MODID, "blazing_fishing_rod");
+    this.setRegistryName(CombustiveFishing.MODID, RegistryReference.BLAZING_FISHING_ROD);
   }
 
   @Nonnull

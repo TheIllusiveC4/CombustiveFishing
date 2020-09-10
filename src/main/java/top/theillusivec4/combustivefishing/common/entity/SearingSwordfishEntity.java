@@ -42,9 +42,9 @@ public class SearingSwordfishEntity extends AbstractLavaFishEntity {
   }
 
   public static AttributeModifierMap.MutableAttribute registerAttribute() {
-    return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233818_a_, 10.0D)
-        .func_233815_a_(Attributes.field_233821_d_, 1.2F)
-        .func_233815_a_(Attributes.field_233823_f_, 3.0D);
+    return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 10.0D)
+        .createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.2F)
+        .createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D);
   }
 
   @Nonnull

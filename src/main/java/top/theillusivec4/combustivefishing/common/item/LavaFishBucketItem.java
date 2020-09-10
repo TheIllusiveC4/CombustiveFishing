@@ -36,6 +36,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import top.theillusivec4.combustivefishing.common.entity.AbstractLavaFishEntity;
 
 public class LavaFishBucketItem extends BucketItem {
@@ -51,8 +52,8 @@ public class LavaFishBucketItem extends BucketItem {
 
   @Override
   public void onLiquidPlaced(World worldIn, ItemStack p_203792_2_, BlockPos pos) {
-    if (!worldIn.isRemote) {
-      this.placeFish(worldIn, p_203792_2_, pos);
+    if (worldIn instanceof ServerWorld) {
+      this.placeFish((ServerWorld) worldIn, p_203792_2_, pos);
     }
   }
 
@@ -63,7 +64,7 @@ public class LavaFishBucketItem extends BucketItem {
         0.5F);
   }
 
-  private void placeFish(World worldIn, ItemStack stack, BlockPos pos) {
+  private void placeFish(ServerWorld worldIn, ItemStack stack, BlockPos pos) {
     Entity entity = this.getFishType()
         .spawn(worldIn, stack, null, pos, SpawnReason.BUCKET, true, false);
 

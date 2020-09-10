@@ -44,6 +44,9 @@ public class CombustiveFishingItems {
   @ObjectHolder(RegistryReference.COOLED_BILL)
   public static final Item COOLED_BILL;
 
+  @ObjectHolder(RegistryReference.BLAZING_FISHING_ROD)
+  public static final Item BLAZING_FISHING_ROD;
+
   static {
     COMBUSTIVE_COD_BUCKET = null;
     COMBUSTIVE_COD = null;
@@ -51,5 +54,6 @@ public class CombustiveFishingItems {
     BONE_FISH = null;
     SWORDFISH_BILL = null;
     COOLED_BILL = null;
+    BLAZING_FISHING_ROD = null;
   }
 }

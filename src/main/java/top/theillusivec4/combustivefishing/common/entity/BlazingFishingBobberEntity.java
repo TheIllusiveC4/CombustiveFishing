@@ -200,7 +200,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity {
         this.ticksInGround = 0;
       }
       float f = 0.0F;
-      BlockPos blockpos = this.func_233580_cy_();
+      BlockPos blockpos = this.getPosition();
       FluidState fluidstate = this.world.getFluidState(blockpos);
 
       if (fluidstate.isTagged(FluidTags.LAVA) || fluidstate.isTagged(FluidTags.WATER)) {
@@ -347,7 +347,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity {
 
   private void checkCollision() {
     RayTraceResult raytraceresult = ProjectileHelper
-        .func_234618_a_(this, this::func_230298_a_, RayTraceContext.BlockMode.COLLIDER);
+        .func_234618_a_(this, this::func_230298_a_);
     this.onImpact(raytraceresult);
   }
 
@@ -511,7 +511,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity {
       } else if (this.ticksCatchable > 0) {
         LootContext.Builder lootcontext$builder = (new LootContext.Builder(
             (ServerWorld) this.world))
-            .withParameter(LootParameters.POSITION, new BlockPos(this.getPositionVec()))
+            .withParameter(LootParameters.field_237457_g_, this.getPositionVec())
             .withParameter(LootParameters.TOOL, itemStack).withRandom(this.rand)
             .withLuck((float) this.luck + playerentity.getLuck());
         lootcontext$builder.withParameter(LootParameters.KILLER_ENTITY, playerentity)
