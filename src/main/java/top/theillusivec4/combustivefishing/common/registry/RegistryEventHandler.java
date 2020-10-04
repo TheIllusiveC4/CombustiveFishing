@@ -40,6 +40,7 @@ import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
@@ -83,48 +84,5 @@ public class RegistryEventHandler {
         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractLavaFishEntity::canSpawn);
     EntitySpawnPlacementRegistry.register(CombustiveFishingEntities.SEARING_SWORDFISH, type,
         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractLavaFishEntity::canSpawn);
-    addSpawnEntries();
-  }
-
-  @SuppressWarnings("deprecation")
-  public static void addSpawnEntries() {
-
-    try {
-      for (Biome biome : WorldGenRegistries.field_243657_i) {
-
-        if (biome.getCategory() == Biome.Category.NETHER) {
-          addMobSpawnToBiome(biome, EntityClassification.WATER_CREATURE,
-              new MobSpawnInfo.Spawners(CombustiveFishingEntities.SEARING_SWORDFISH, 1, 1, 2));
-          addMobSpawnToBiome(biome, EntityClassification.WATER_CREATURE,
-              new MobSpawnInfo.Spawners(CombustiveFishingEntities.COMBUSTIVE_COD, 15, 3, 6));
-        }
-      }
-    } catch (Exception e) {
-      CombustiveFishing.LOGGER
-          .error("Error encountered while trying to add mob spawns to biomes! " + e);
-    }
-  }
-
-  public static void addMobSpawnToBiome(Biome biome, EntityClassification classification,
-      MobSpawnInfo.Spawners... spawners) throws NoSuchFieldException, IllegalAccessException {
-    Field field = biome.func_242433_b().getClass().getDeclaredField("field_242554_e");
-    field.setAccessible(true);
-    Map<EntityClassification, List<Spawners>> spawnMap = convertImmutableSpawners(field, biome);
-    List<Spawners> spawnersList = new ArrayList<>(spawnMap.get(classification));
-    spawnersList.addAll(Arrays.asList(spawners));
-    spawnMap.put(classification, spawnersList);
-  }
-
-  @SuppressWarnings("unchecked")
-  private static Map<EntityClassification, List<Spawners>> convertImmutableSpawners(Field field,
-      Biome biome) throws IllegalAccessException {
-
-    if (field.getType().isAssignableFrom(ImmutableMap.class)) {
-      Map<EntityClassification, List<Spawners>> newSpawnMap = new HashMap<>(
-          (Map<EntityClassification, List<Spawners>>) field.get(biome.func_242433_b()));
-      field.set(biome.func_242433_b(), newSpawnMap);
-      return newSpawnMap;
-    }
-    return new HashMap<>();
   }
 }

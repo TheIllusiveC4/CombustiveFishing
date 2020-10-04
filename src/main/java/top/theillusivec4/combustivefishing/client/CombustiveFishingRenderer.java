@@ -47,7 +47,7 @@ public class CombustiveFishingRenderer {
         SwordfishRenderer::new);
 
     ItemModelsProperties
-        .func_239418_a_(CombustiveFishingItems.BLAZING_FISHING_ROD, new ResourceLocation("cast"),
+        .registerProperty(CombustiveFishingItems.BLAZING_FISHING_ROD, new ResourceLocation("cast"),
             (p_239422_0_, p_239422_1_, p_239422_2_) -> {
               if (p_239422_2_ == null) {
                 return 0.0F;

@@ -523,7 +523,7 @@ public class BlazingFishingBobberEntity extends FishingBobberEntity {
 
         if (state.getMaterial() == Material.LAVA) {
 
-          if (this.world.func_234923_W_() == World.field_234919_h_) {
+          if (this.world.getDimensionKey() == World.THE_NETHER) {
             loottable = CombustiveFishingLoot.NETHER_FISHING;
           } else {
             loottable = CombustiveFishingLoot.LAVA_FISHING;

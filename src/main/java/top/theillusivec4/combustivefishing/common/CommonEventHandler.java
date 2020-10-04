@@ -23,16 +23,31 @@ import com.google.common.collect.Lists;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraftforge.common.world.MobSpawnInfoBuilder;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import top.theillusivec4.combustivefishing.CombustiveFishing;
+import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingEntities;
 import top.theillusivec4.combustivefishing.common.registry.CombustiveFishingItems;
 
 public class CommonEventHandler {
+
+  @SubscribeEvent(priority = EventPriority.HIGH)
+  public void addBiomeSpawns(BiomeLoadingEvent evt) {
+    MobSpawnInfoBuilder spawnInfo = evt.getSpawns();
+    spawnInfo.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(
+        CombustiveFishingEntities.SEARING_SWORDFISH, 1, 1, 2));
+    spawnInfo.withSpawner(EntityClassification.WATER_CREATURE,
+        new MobSpawnInfo.Spawners(CombustiveFishingEntities.COMBUSTIVE_COD, 15, 3, 6));
+  }
 
   @SubscribeEvent
   public void onOcelotJoin(EntityJoinWorldEvent evt) {
@@ -45,7 +60,10 @@ public class CommonEventHandler {
             .getPrivateValue(OcelotEntity.class, ocelot, "field_70914_e");
         Ingredient breedingItems = ObfuscationReflectionHelper
             .getPrivateValue(OcelotEntity.class, ocelot, "field_195402_bB");
-        ocelot.goalSelector.removeGoal(temptGoal);
+
+        if (temptGoal != null) {
+          ocelot.goalSelector.removeGoal(temptGoal);
+        }
         Ingredient newBreedingItems = Ingredient.merge(Lists
             .newArrayList(breedingItems, Ingredient.fromItems(CombustiveFishingItems.BONE_FISH)));
         Class<?> temptClass = OcelotEntity.class.getDeclaredClasses()[0];
