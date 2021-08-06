@@ -1,14 +1,14 @@
 {
-  "item.combustivefishing.blazing_fishing_rod": "Blazing Fishing Rod",
-  "item.combustivefishing.combustive_cod_bucket": "Combustive Cod Bucket",
+  "item.combustivefishing.blazing_fishing_rod": "烈焰钓竿",
+  "item.combustivefishing.combustive_cod_bucket": "燃烧鳕鱼桶",
   "item.combustivefishing.combustive_cod": "燃烧鳕鱼",
-  "item.combustivefishing.combustive_cod_spawn_egg": "Combustive Cod Spawn Egg",
+  "item.combustivefishing.combustive_cod_spawn_egg": "燃烧鳕鱼刷怪蛋",
   "item.combustivefishing.cooled_cod": "冷却的鳕鱼",
   "item.combustivefishing.bone_fish": "骨鱼",
-  "item.combustivefishing.swordfish_bill": "Searing Swordfish Bill",
-  "item.combustivefishing.searing_sword": "Searing Sword",
-  "item.combustivefishing.searing_swordfish_spawn_egg": "Searing Swordfish Spawn Egg",
-  "item.combustivefishing.cooled_bill": "Cooled Bill",
+  "item.combustivefishing.swordfish_bill": "灼热剑鱼头骨",
+  "item.combustivefishing.searing_sword": "灼热之剑",
+  "item.combustivefishing.searing_swordfish_spawn_egg": "灼热剑鱼刷怪蛋",
+  "item.combustivefishing.cooled_bill": "冷却的剑鱼头骨",
   "entity.combustivefishing.combustive_cod": "燃烧鳕鱼",
-  "entity.combustivefishing.searing_swordfish": "炽热剑鱼"
+  "entity.combustivefishing.searing_swordfish": "灼热剑鱼"
 }
